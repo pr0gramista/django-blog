@@ -1,8 +1,8 @@
 {% if posts %}
     {% for post in posts %}
     <article>
-        <h1>{{ post.title }}</h1>
-        {{ post.content }}
+        <h1><a href="{% url 'post' post.slug %}">{{ post.title }}</a></h1>
+        {{ post.compiled_content|safe }}
     </article>
     {% endfor %}
 {% endif %}
