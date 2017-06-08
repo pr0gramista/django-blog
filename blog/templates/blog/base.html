@@ -1,0 +1,132 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pl-PL">
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Blog o programowaniu">
+  <meta name="keywords" content="programowanie">
+  <meta name="author" content="Bartosz Wiśniewski">
+  <link rel="shortcut icon" href="{% static 'favicon.ico' %}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static "/apple-touch-icon.png" %}">
+  <link rel="icon" type="image/png" href="{% static "/favicon-32x32.png" %}" sizes="32x32">
+  <link rel="icon" type="image/png" href="{% static "/favicon-16x16.png" %}" sizes="16x16">
+  <link rel="manifest" href="{% static "/manifest.json" %}">
+  <link rel="mask-icon" href="{% static "/safari-pinned-tab.svg" %}" color="#1f262c">
+  <meta name="theme-color" content="#282c34">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+  <link rel="stylesheet" href="{% static "/css/style.css" %}" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/atom-one-dark.min.css">
+
+  <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+  <div class="mdl-layout mdl-js-layout mdl-layout--no-desktop-drawer-button mdl-layout--fixed-header">
+    <header class="mdl-layout__header">
+      <div class="mdl-layout__header-row container">
+        <!-- Title -->
+
+        <span class="mdl-layout-title title"><a href="/" class="nolink">>PR0GRAMISTA_</a></span>
+        <!-- Add spacer, to align navigation to the right -->
+        <div class="mdl-layout-spacer"></div>
+        <!-- Navigation. We hide it in small screens. -->
+        <nav class="mdl-navigation mdl-layout--large-screen-only">
+          <!--LOOP-->
+          <a class="mdl-navigation__link" href="xx">Page</a>
+        </nav>
+      </div>
+    </header>
+    <div class="mdl-layout__drawer">
+      <span class="mdl-layout-title">PR0GRAMISTA</span>
+      <nav class="mdl-navigation">
+        <!--LOOP-->
+        <a class="mdl-navigation__link" href="xx">Page</a>
+      </nav>
+    </div>
+    <main class="mdl-layout__content">
+      <div class="page-content">
+        <div class="container">
+          <div class="mdl-grid">
+            <div class="mdl-cell mdl-cell--9-col mdl-cell--12-col-tablet">
+              {% block content %}{% endblock %}
+            </div>
+            <div class="mdl-cell mdl-cell--3-col mdl-cell--12-col-tablet">
+              <div class="sidebar">
+                <div id="twitter-timeline"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer>
+        <div class="container">
+          <div class="mdl-mini-footer">
+            <div class="mdl-mini-footer__left-section">
+              <div class="mdl-logo">
+                PR0GRAMISTA
+              </div>
+              <ul class="mdl-mini-footer__link-list">
+                <!--LOOP-->
+                <li><a href="xxx">Page</a></li>
+              </ul>
+            </div>
+            <div class="mdl-mini-footer__right-section">
+              <a href="https://twitter.com/{{ .Site.Params.Twitter }}" class="nolink icon-button" id="twitter">
+                <img src="{% static "/img/twitter-circle.png" %}" alt="Twitter" />
+              </a>
+              <a href="https://stackoverflow.com/user/{{ .Site.Params.Stackoverflow }}" class="nolink icon-button" id="stackoverflow">
+                <img src="{% static "/img/stackoverflow.png" %}" alt="StackOverflow" />
+              </a>
+              <a href="https://github.com/{{ .Site.Params.Github }}" class="nolink icon-button" id="github">
+                <img src="{% static "/img/github-circle.png" %}" alt="GitHub" />
+              </a>
+              <a href="https://youtube.com/user/poprosturonin" class="nolink icon-button" id="youtube">
+                <img src="{% static "/img/youtube-play.png" %}" alt="YouTube" />
+              </a>
+              <div class="mdl-tooltip" data-mdl-for="twitter">
+                Zobacz moje tweety
+              </div>
+              <div class="mdl-tooltip" data-mdl-for="stackoverflow">
+                Zobacz moje odpowiedzi
+              </div>
+              <div class="mdl-tooltip" data-mdl-for="github">
+                Zobacz moje repozytoria
+              </div>
+              <div class="mdl-tooltip" data-mdl-for="youtube">
+                Obejrzyj moje filmy
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </main>
+  </div>
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script>
+  document.body.addEventListener('mdl-componentupgraded', (event) => {
+    if (event.target.className.split(' ').indexOf('mdl-js-layout') < 0) {
+      return;
+    }
+    twttr.widgets.createTimeline(
+      {
+        sourceType: 'profile',
+        screenName: '{{ .Site.Params.Twitter }}',
+      },
+      document.getElementById('twitter-timeline'),
+      {
+        width: '100%',
+        tweetLimit: 5,
+        lang: 'pl'
+      }
+    );
+  })
+  </script>
+</body>
+</html>
