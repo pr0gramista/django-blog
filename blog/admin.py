@@ -2,12 +2,13 @@ from django.contrib import admin
 from mistune import markdown
 
 # Register your models here.
-from .models import Post
+from .models import Post, Page
 
 
 class PostAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
-        obj.compiled_content = markdown(obj.content)
+        obj.content = markdown(obj.raw_content)
         obj.save()
 
 admin.site.register(Post, PostAdmin)
+admin.site.register(Page)

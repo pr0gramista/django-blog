@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-from .models import Post
+from .models import Post, Page
 
 def index(request):
     latest_posts = Post.objects.order_by('-pub_date')[:5]
@@ -12,3 +12,8 @@ def post(request, post_slug):
     post = Post.objects.get(slug=post_slug)
     context = {'post': post}
     return render(request, 'blog/post.html', context)
+
+def page(request, page_slug):
+    page = Page.objects.get(slug=page_slug)
+    context = {'page': page}
+    return render(request, 'blog/page.html', context)

@@ -7,7 +7,7 @@
     {% for post in posts %}
     <article>
         <h1><a href="{% url 'post' post.slug %}">{{ post.title }}</a></h1>
-        {{ post.compiled_content|safe }}
+        {{ post.content|safe }}
     </article>
     {% endfor %}
 {% endif %}
