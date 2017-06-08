@@ -35,16 +35,18 @@
         <div class="mdl-layout-spacer"></div>
         <!-- Navigation. We hide it in small screens. -->
         <nav class="mdl-navigation mdl-layout--large-screen-only">
-          <!--LOOP-->
-          <a class="mdl-navigation__link" href="xx">Page</a>
+          {% for page in pages %}
+          <a class="mdl-navigation__link" href="{% url 'page' page.slug %}">{{ page.title }}</a>
+          {% endfor %}
         </nav>
       </div>
     </header>
     <div class="mdl-layout__drawer">
       <span class="mdl-layout-title">PR0GRAMISTA</span>
       <nav class="mdl-navigation">
-        <!--LOOP-->
-        <a class="mdl-navigation__link" href="xx">Page</a>
+        {% for page in pages %}
+        <a class="mdl-navigation__link" href="{% url 'page' page.slug %}">{{ page.title }}</a>
+        {% endfor %}
       </nav>
     </div>
     <main class="mdl-layout__content">
@@ -70,8 +72,9 @@
                 PR0GRAMISTA
               </div>
               <ul class="mdl-mini-footer__link-list">
-                <!--LOOP-->
-                <li><a href="xxx">Page</a></li>
+                {% for page in pages %}
+                <li><a href="{% url 'page' page.slug %}">{{ page.title }}</a></li>
+                {% endfor %}
               </ul>
             </div>
             <div class="mdl-mini-footer__right-section">
