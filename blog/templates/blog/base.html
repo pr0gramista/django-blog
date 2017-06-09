@@ -78,30 +78,14 @@
               </ul>
             </div>
             <div class="mdl-mini-footer__right-section">
-              <a href="https://twitter.com/{{ .Site.Params.Twitter }}" class="nolink icon-button" id="twitter">
-                <img src="{% static "/img/twitter-circle.png" %}" alt="Twitter" />
+              {% for link in social_links %}
+              <a href="{{ link.url }}" class="nolink icon-button" id="{{ link.slug }}">
+                <img src="{{ link.image.url }}" alt="{{ link.slug }}" />
               </a>
-              <a href="https://stackoverflow.com/user/{{ .Site.Params.Stackoverflow }}" class="nolink icon-button" id="stackoverflow">
-                <img src="{% static "/img/stackoverflow.png" %}" alt="StackOverflow" />
-              </a>
-              <a href="https://github.com/{{ .Site.Params.Github }}" class="nolink icon-button" id="github">
-                <img src="{% static "/img/github-circle.png" %}" alt="GitHub" />
-              </a>
-              <a href="https://youtube.com/user/poprosturonin" class="nolink icon-button" id="youtube">
-                <img src="{% static "/img/youtube-play.png" %}" alt="YouTube" />
-              </a>
-              <div class="mdl-tooltip" data-mdl-for="twitter">
-                Zobacz moje tweety
+              <div class="mdl-tooltip" data-mdl-for="{{ link.slug }}">
+                {{ link.tooltip }}
               </div>
-              <div class="mdl-tooltip" data-mdl-for="stackoverflow">
-                Zobacz moje odpowiedzi
-              </div>
-              <div class="mdl-tooltip" data-mdl-for="github">
-                Zobacz moje repozytoria
-              </div>
-              <div class="mdl-tooltip" data-mdl-for="youtube">
-                Obejrzyj moje filmy
-              </div>
+              {% endfor %}
             </div>
           </div>
         </div>

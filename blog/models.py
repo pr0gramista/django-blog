@@ -18,6 +18,7 @@ class Page(models.Model):
     order = models.IntegerField(verbose_name="Kolejność", default=10)
 
 class SocialLink(models.Model):
+    slug = models.SlugField(default='')
     tooltip = models.CharField(max_length=200, verbose_name="Podpis")
     url = models.URLField(verbose_name="Adres linku")
     image = models.ImageField(verbose_name="Ikona")
