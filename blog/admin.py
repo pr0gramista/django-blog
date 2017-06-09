@@ -2,7 +2,7 @@ from django.contrib import admin
 from mistune import markdown
 
 # Register your models here.
-from .models import Post, Page
+from .models import Post, Page, SocialLink
 
 
 class PostAdmin(admin.ModelAdmin):
@@ -12,3 +12,4 @@ class PostAdmin(admin.ModelAdmin):
 
 admin.site.register(Post, PostAdmin)
 admin.site.register(Page)
+admin.site.register(SocialLink)
