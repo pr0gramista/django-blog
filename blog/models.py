@@ -1,6 +1,7 @@
 from django.db import models
 from taggit.managers import TaggableManager
-
+from imagekit.models import ImageSpecField, ProcessedImageField
+from imagekit.processors import ResizeToFit
 
 class Post(models.Model):
     title = models.CharField(max_length=200, verbose_name="Tytuł")
@@ -21,5 +22,10 @@ class SocialLink(models.Model):
     slug = models.SlugField(default='')
     tooltip = models.CharField(max_length=200, verbose_name="Podpis")
     url = models.URLField(verbose_name="Adres linku")
-    image = models.ImageField(verbose_name="Ikona")
+    image = ProcessedImageField(
+        upload_to='images/social_links',
+        default='',
+        verbose_name="Ikona",
+        processors=[ResizeToFit(300, 300)],
+        format='PNG')
     order = models.IntegerField(verbose_name="Kolejność", default=10)
