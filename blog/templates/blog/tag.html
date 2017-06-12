@@ -1,0 +1,15 @@
+{% extends "blog/base.html" %}
+
+{% block title %}{{ tag.name }} | PR0GRAMISTA{% endblock %}
+
+{% block content %}
+<h1>Tag: {{ tag.name }}</h1>
+{% if posts %}
+    {% for post in posts %}
+    <article>
+        <h1><a href="{% url 'post' post.slug %}">{{ post.title }}</a></h1>
+        {{ post.content|safe }}
+    </article>
+    {% endfor %}
+{% endif %}
+{% endblock %}
