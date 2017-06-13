@@ -8,10 +8,17 @@
   {{ post.content|safe }}
 
   <div>
-    {% for tag in post.tags.names %}
-    <span class="mdl-chip">
-      <span class="mdl-chip__text">{{ tag }}</span>
-    </span>
+    <style scoped>
+    a {
+      text-decoration: none;
+    }
+    </style>
+    {% for tag in post.tags.all %}
+    <a href="{% url 'tag' tag.slug %}">
+      <span class="mdl-chip">
+        <span class="mdl-chip__text">{{ tag.name }}</span>
+      </span>
+    </a>
     {% endfor %}
   </div>
 </article>

@@ -72,38 +72,10 @@ body {
   background: none;
 }
 
-.sidebar {
-  border-left: 1px solid #eee;
-  height: 100%;
+.post-card.mdl-card {
+  width: 100%;
 }
 
-article {
-  position: relative;
-}
-
-.publish-time {
-  position: absolute;
-  top: -10px;
-  right: 10px;
-}
-
-.main-navigation {
-  text-align: center;
-}
-
-.figure-80 {
-  width: 80%;
-}
-
-.figure-text-italic {
-  font-style: italic;
-}
-
-.figure-center {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-figure > img {
-	margin-bottom: 8px;
+.post-card-image > .mdl-card__title {
+  height: 176px;
 }
