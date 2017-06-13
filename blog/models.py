@@ -2,6 +2,7 @@ from django.db import models
 from taggit.managers import TaggableManager
 from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFit, ResizeToCover
+from colorfield.fields import ColorField
 
 class Post(models.Model):
     COVER = 'cover'
@@ -14,6 +15,8 @@ class Post(models.Model):
     title = models.CharField(max_length=200, verbose_name="Tytuł")
     slug = models.SlugField(default='')
     show_title = models.BooleanField(verbose_name="Pokaż tytuł", default=True)
+    title_background = ColorField(default='#000', verbose_name="Kolor tła tytułu")
+    title_background_opacity = models.FloatField(default='0.5', verbose_name="Przeźroczystość tła tytułu")
     image = ProcessedImageField(
         upload_to='images/posts',
         default='',
@@ -21,7 +24,8 @@ class Post(models.Model):
         processors=[ResizeToCover(800, 600)],
         format='JPEG',
         options={'quality': 80})
-    image_display_stategy = models.CharField(max_length=30, choices=IMAGE_STATEGY, default=COVER)
+    image_display_stategy = models.CharField(max_length=30, choices=IMAGE_STATEGY, default=COVER, verbose_name="Stategia wielkości tła")
+    image_background = ColorField(default='#FFF', verbose_name="Kolor tła obrazka", blank=True)
     pub_date = models.DateTimeField(verbose_name="Data publikacji")
     raw_content = models.TextField(verbose_name="Zawartość surowa")
     content = models.TextField(verbose_name="Zawartość", default='', blank=True)
