@@ -1,7 +1,8 @@
 from django.db import models
 from taggit.managers import TaggableManager
 from imagekit.models import ImageSpecField, ProcessedImageField
-from imagekit.processors import ResizeToFit, ResizeToFill
+from imagekit.processors import ResizeToFit, ResizeToFill, ResizeCanvas
+from .imagekit import UpscaleToFit
 
 class Post(models.Model):
     title = models.CharField(max_length=200, verbose_name="Tytuł")
@@ -13,7 +14,7 @@ class Post(models.Model):
         upload_to='images/posts',
         default='',
         verbose_name="Główny obrazek",
-        processors=[ResizeToFill(1024, 576)],
+        processors=[ResizeToFill(1024, 576, upscale=False), UpscaleToFit(512, 288), ResizeCanvas(1024, 576, color=(255, 255, 255))],
         format='JPEG',
         options={'quality': 80})
     pub_date = models.DateTimeField(verbose_name="Data publikacji")
