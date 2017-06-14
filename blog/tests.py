@@ -21,7 +21,7 @@ def add_post(title, published, content):
         content=content)
 
 class IndexViewTests(TestCase):
-    def test_no_published_posts(self):
+    def test_no_private_posts(self):
         """
         Unpublished posts should not be displayed in any form
         """
@@ -45,5 +45,20 @@ class IndexViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertQuerysetEqual(response.context['posts'], [])
 
+class PostViewTests(TestCase):
+    def test_published_post(self):
+        post = add_post('good post', True, 'This is a public post')
+
+        response = self.client.get(reverse('post', args=post.slug))
+        self.assertEqual(response.status_code, 200)
+        self.assertQuerysetEqual(response.context['post'], '<Post: good post>')
+    def test_no_private_post(self):
+        """
+        Unpublished post should not be displayed in any form
+        """
+        post = add_post('bad post', False, 'This is a private post')
+
+        response = self.client.get(reverse('post', args=post.slug))
+        self.assertEqual(response.status_code, 404)
 
 # Create your tests here.
