@@ -5,11 +5,15 @@
 {% block content %}
 {% if posts %}
   {% for post in posts %}
-  <div class="mdl-cell mdl-cell--6-col">
+  <div class="mdl-cell {% if forloop.counter0|divisibleby:3 %}mdl-cell--12-col{% else %}mdl-cell--6-col mdl-cell--12-col-tablet{% endif %}">
     <style>
     #{{post.slug}} .post-widget-title {
       background-color: {{post.title_background}};
-      font-size: {{post.title_size}}px;
+      {% if forloop.counter0|divisibleby:3 %}
+      font-size: {{ post.title_size }}px;
+      {% else %}
+      font-size: {% widthratio post.title_size 1.5 1%}px;
+      {% endif %}
     }
     </style>
     <div class="post-widget mdl-shadow--3dp" id="{{post.slug}}">

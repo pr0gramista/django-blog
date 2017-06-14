@@ -78,3 +78,9 @@ body {
     text-decoration: none; }
   .post-widget-placeholder {
     height: 175px; }
+
+.sidebar {
+  margin-top: 8px;
+  background: #EEE;
+  width: 100%;
+  min-height: 400px; }
