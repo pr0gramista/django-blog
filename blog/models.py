@@ -10,6 +10,7 @@ class Post(models.Model):
     show_title = models.BooleanField(verbose_name="Pokaż tytuł", default=True)
     title_size = models.IntegerField(default=42, verbose_name="Wielkość tytułu (px)")
     title_background = models.CharField(max_length=80, default='rgba(0, 0, 0, 0.5)', verbose_name="Kolor tła tytułu")
+    fullwidth = models.BooleanField(default=True, verbose_name="Pełna szerokość strony (usuwa boczny panel)")
     image = ProcessedImageField(
         upload_to='images/posts',
         default='',

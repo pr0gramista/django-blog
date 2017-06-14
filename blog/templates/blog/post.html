@@ -1,4 +1,4 @@
-{% extends "blog/base.html" %}
+{% extends post.fullwidth|yesno:"blog/base-fullwidth.html,blog/base.html" %}
 
 {% block title %}{{ post.title }} | PR0GRAMISTA{% endblock %}
 
