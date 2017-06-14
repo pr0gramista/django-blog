@@ -24,6 +24,9 @@ class Post(models.Model):
     published = models.BooleanField(verbose_name="Opublikowany", default=False)
     tags = TaggableManager()
 
+    def __str__(self):
+        return self.title
+
 class Page(models.Model):
     title = models.CharField(max_length=200, verbose_name="Tytuł")
     slug = models.SlugField(default='')
