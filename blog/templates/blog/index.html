@@ -12,10 +12,10 @@
       font-size: {{post.title_size}}px;
     }
     </style>
-    <div class="post-widget mdl-shadow--4dp" id="{{post.slug}}">
+    <div class="post-widget mdl-shadow--3dp" id="{{post.slug}}">
       <a href="{% url 'post' post.slug %}">
         <img src="{{ post.image.url }}"/>
-        <div class="post-widget-title-wrapper"><span class="post-widget-title">{{ post.title }}</span></div>
+        <div class="post-widget-title-wrapper"><span class="mdl-shadow--4dp post-widget-title">{{ post.title }}</span></div>
       </a>
     </div>
   </div>
