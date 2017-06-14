@@ -5,37 +5,18 @@
 {% block content %}
 {% if posts %}
   {% for post in posts %}
-  <div class="mdl-cell mdl-cell--4-col">
-
-    <div class="{{post.slug}} post-card mdl-card mdl-shadow--2dp {% if post.image|length > 0 %}post-card-image{% endif %}">
-      {% if post.image|length > 0 %}
-      <style scoped>
-        .post-card-image.{{post.slug}} > .mdl-card__title {
-          background-image: url({{ post.image.url }});
-          background-position: center;
-          background-size: {{post.image_display_stategy}};
-          background-repeat: no-repeat;
-        }
-      </style>
-      {% endif %}
-      <div class="mdl-card__title">
-        {% if post.show_title %}
-        <h2 class="mdl-card__title-text">{{ post.title }}</h2>
-        {% endif %}
-      </div>
-      <div class="mdl-card__supporting-text">
-        {{ post.content|safe|truncatewords:20}}
-      </div>
-      <div class="mdl-card__actions mdl-card--border">
-        <a href="{% url 'post' post.slug %}" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-          Czytaj więcej
-        </a>
-      </div>
-      <!--<div class="mdl-card__menu">
-        <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-          <i class="material-icons">share</i>
-        </button>
-      </div>-->
+  <div class="mdl-cell mdl-cell--6-col">
+    <style>
+    #{{post.slug}} .post-widget-title {
+      background-color: {{post.title_background}};
+      font-size: {{post.title_size}}px;
+    }
+    </style>
+    <div class="post-widget mdl-shadow--4dp" id="{{post.slug}}">
+      <a href="{% url 'post' post.slug %}">
+        <img src="{{ post.image.url }}"/>
+        <div class="post-widget-title-wrapper"><span class="post-widget-title">{{ post.title }}</span></div>
+      </a>
     </div>
   </div>
   {% endfor %}
