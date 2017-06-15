@@ -1,5 +1,6 @@
 from pilkit.processors import ResizeToFit, Anchor
 
+
 class UpscaleToFit(object):
     """
     Only upscales image to the given dimensions

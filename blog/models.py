@@ -4,18 +4,22 @@ from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFit, ResizeToFill, ResizeCanvas
 from .imagekit import UpscaleToFit
 
+
 class Post(models.Model):
     title = models.CharField(max_length=200, verbose_name="Tytuł")
     slug = models.SlugField(default='')
     show_title = models.BooleanField(verbose_name="Pokaż tytuł", default=True)
     title_size = models.IntegerField(default=42, verbose_name="Wielkość tytułu (px)")
-    title_background = models.CharField(max_length=80, default='rgba(0, 0, 0, 0.5)', verbose_name="Kolor tła tytułu")
-    fullwidth = models.BooleanField(default=True, verbose_name="Pełna szerokość strony (usuwa boczny panel)")
+    title_background = models.CharField(
+        max_length=80, default='rgba(0, 0, 0, 0.5)', verbose_name="Kolor tła tytułu")
+    fullwidth = models.BooleanField(
+        default=True, verbose_name="Pełna szerokość strony (usuwa boczny panel)")
     image = ProcessedImageField(
         upload_to='images/posts',
         default='',
         verbose_name="Główny obrazek",
-        processors=[ResizeToFill(1024, 576, upscale=False), UpscaleToFit(512, 288), ResizeCanvas(1024, 576, color=(255, 255, 255))],
+        processors=[ResizeToFill(1024, 576, upscale=False), UpscaleToFit(
+            512, 288), ResizeCanvas(1024, 576, color=(255, 255, 255))],
         format='JPEG',
         options={'quality': 80})
     pub_date = models.DateTimeField(verbose_name="Data publikacji")
@@ -27,11 +31,13 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+
 class Page(models.Model):
     title = models.CharField(max_length=200, verbose_name="Tytuł")
     slug = models.SlugField(default='')
     content = models.TextField(verbose_name="Zawartość")
     order = models.IntegerField(verbose_name="Kolejność", default=10)
+
 
 class SocialLink(models.Model):
     slug = models.SlugField(default='')

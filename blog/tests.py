@@ -4,14 +4,16 @@ from django.test.utils import setup_test_environment
 from django.utils import timezone
 from django.core.files.uploadedfile import SimpleUploadedFile
 
-example_image = SimpleUploadedFile(name='test.png', content=open('test.png', 'rb').read(), content_type='image/jpeg')
+example_image = SimpleUploadedFile(name='test.png', content=open(
+    'test.png', 'rb').read(), content_type='image/jpeg')
 
 from .models import Post
+
 
 def add_post(title, published, content, fullwidth=True):
     return Post.objects.create(
         title=title,
-        slug=title.replace(' ','-')[0],
+        slug=title.replace(' ', '-')[0],
         title_size=42,
         title_background='rgba(0, 0, 0, 0.5)',
         image=example_image,
@@ -20,6 +22,7 @@ def add_post(title, published, content, fullwidth=True):
         fullwidth=fullwidth,
         raw_content=content,
         content=content)
+
 
 class IndexViewTests(TestCase):
     def test_no_private_posts(self):
@@ -46,6 +49,7 @@ class IndexViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertQuerysetEqual(response.context['posts'], [])
 
+
 class PostViewTests(TestCase):
     def test_published_post(self):
         post = add_post('good post', True, 'This is a public post')
@@ -60,8 +64,8 @@ class PostViewTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
-                        any(x for x in response.templates if '/base-fullwidth.html' in x.name),
-                        True)
+            any(x for x in response.templates if '/base-fullwidth.html' in x.name),
+            True)
 
     def test_no_fullwidth_post(self):
         post = add_post('bad post', True, 'This is public post', fullwidth=False)
@@ -69,8 +73,8 @@ class PostViewTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
-                        any(x for x in response.templates if '/base-fullwidth.html' in x.name),
-                        False)
+            any(x for x in response.templates if '/base-fullwidth.html' in x.name),
+            False)
 
     def test_no_private_post(self):
         """

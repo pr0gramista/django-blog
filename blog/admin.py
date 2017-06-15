@@ -10,6 +10,7 @@ class PostAdmin(admin.ModelAdmin):
         obj.content = markdown(obj.raw_content)
         obj.save()
 
+
 admin.site.register(Post, PostAdmin)
 admin.site.register(Page)
 admin.site.register(SocialLink)
