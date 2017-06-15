@@ -8,7 +8,7 @@ example_image = SimpleUploadedFile(name='test.png', content=open('test.png', 'rb
 
 from .models import Post
 
-def add_post(title, published, content):
+def add_post(title, published, content, fullwidth=True):
     return Post.objects.create(
         title=title,
         slug=title.replace(' ','-')[0],
@@ -17,6 +17,7 @@ def add_post(title, published, content):
         image=example_image,
         pub_date=timezone.now(),
         published=published,
+        fullwidth=fullwidth,
         raw_content=content,
         content=content)
 
@@ -51,7 +52,26 @@ class PostViewTests(TestCase):
 
         response = self.client.get(reverse('post', args=post.slug))
         self.assertEqual(response.status_code, 200)
-        self.assertQuerysetEqual(response.context['post'], '<Post: good post>')
+        self.assertQuerysetEqual([response.context['post']], ['<Post: good post>'])
+
+    def test_fullwidth_post(self):
+        post = add_post('good post', True, 'This is public post', fullwidth=True)
+        response = self.client.get(reverse('post', args=post.slug))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+                        any(x for x in response.templates if '/base-fullwidth.html' in x.name),
+                        True)
+
+    def test_no_fullwidth_post(self):
+        post = add_post('bad post', True, 'This is public post', fullwidth=False)
+        response = self.client.get(reverse('post', args=post.slug))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+                        any(x for x in response.templates if '/base-fullwidth.html' in x.name),
+                        False)
+
     def test_no_private_post(self):
         """
         Unpublished post should not be displayed in any form
