@@ -78,6 +78,13 @@ body {
     text-decoration: none; }
   .post-widget-placeholder {
     height: 175px; }
+  .post-widget-tags {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding: 10px; }
+    .post-widget-tags a {
+      text-decoration: none; }
 
 .sidebar {
   margin-top: 8px;

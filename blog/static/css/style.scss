@@ -103,6 +103,15 @@ body {
   &-placeholder {
     height: 175px;
   }
+  &-tags {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding: 10px;
+    a {
+      text-decoration: none;
+    }
+  }
 }
 
 .sidebar {
