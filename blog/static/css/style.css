@@ -87,7 +87,37 @@ body {
       text-decoration: none; }
 
 .sidebar {
-  margin-top: 8px;
-  background: #EEE;
-  width: 100%;
-  min-height: 400px; }
+  padding-top: 8px; }
+  .sidebar > div {
+    margin-bottom: 15px;
+    width: 100%;
+    box-sizing: border-box; }
+  .sidebar-twitter {
+    text-align: center;
+    min-height: 400px;
+    background: #FFF;
+    padding-top: 20px;
+    color: #64B5F6; }
+    .sidebar-twitter i.material-icons {
+      font-size: 40px; }
+    .sidebar-twitter .mdi {
+      font-size: 40px;
+      line-height: 1; }
+  .sidebar-mail {
+    min-height: 170px;
+    background: #E53935;
+    color: #FFF;
+    text-align: center;
+    padding: 20px 10px; }
+    .sidebar-mail i.material-icons {
+      font-size: 40px; }
+    .sidebar-mail .title {
+      font-family: 'Inconsolata';
+      font-size: 20px;
+      margin: 0 10px; }
+    .sidebar-mail a {
+      text-decoration: none;
+      color: inherit; }
+    .sidebar-mail .email {
+      font-size: 28px;
+      margin: 10px 0; }
