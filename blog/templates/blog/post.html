@@ -3,10 +3,17 @@
 {% block title %}{{ post.title }} | PR0GRAMISTA{% endblock %}
 
 {% block content %}
-<article>
-  <h1>{{ post.title }}</h1>
+<article class="post">
+  <div class="header-fake" style="background-image: url({{ post.image.url }});"></div>
+  <div class="header">
+    <div class="title-wrapper">
+      <div class="title">{{ post.title }}
+      </div>
+      <div style="clear: both;"></div>
+    </div>
+  </div>
   {{ post.content|safe }}
-  
+
   <div>
     <style scoped>
     a {
