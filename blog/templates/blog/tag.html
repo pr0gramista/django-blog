@@ -3,13 +3,38 @@
 {% block title %}{{ tag.name }} | PR0GRAMISTA{% endblock %}
 
 {% block content %}
-<h1>Tag: {{ tag.name }}</h1>
+<h3>Tag: {{ tag.name }}</h3>
 {% if posts %}
-    {% for post in posts %}
-    <article>
-        <h1><a href="{% url 'post' post.slug %}">{{ post.title }}</a></h1>
-        {{ post.content|safe }}
-    </article>
-    {% endfor %}
+<div class="mdl-grid" style="padding: 0;">
+  {% for post in posts %}
+  <div class="mdl-cell {% if forloop.counter0|divisibleby:3 %}mdl-cell--12-col{% else %}mdl-cell--6-col mdl-cell--12-col-tablet{% endif %}">
+    <style>
+    #{{post.slug}} .post-widget-title {
+      background-color: {{post.title_background}};
+      {% if forloop.counter0|divisibleby:3 %}
+      font-size: {{ post.title_size }}px;
+      {% else %}
+      font-size: {% widthratio post.title_size 1.5 1%}px;
+      {% endif %}
+    }
+    </style>
+    <div class="post-widget mdl-shadow--3dp" id="{{post.slug}}">
+      <a href="{% url 'post' post.slug %}">
+        <img src="{{ post.image.url }}"/>
+        <div class="post-widget-tags">
+          {% for tag in post.tags.all %}
+          <a href="{% url 'tag' tag.slug %}">
+            <span class="mdl-chip">
+              <span class="mdl-chip__text">{{ tag.name }}</span>
+            </span>
+          </a>
+          {% endfor %}
+        </div>
+        <div class="post-widget-title-wrapper"><span class="mdl-shadow--4dp post-widget-title">{{ post.title }}</span></div>
+      </a>
+    </div>
+  </div>
+  {% endfor %}
+</div>
 {% endif %}
 {% endblock %}

@@ -1,13 +1,33 @@
 from django.shortcuts import render, get_object_or_404, get_list_or_404
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse
 from taggit.models import Tag
 
 from .models import Post, Page
 
 
+POSTS_PER_PAGE = 5
+
+
 def index(request):
-    latest_posts = Post.objects.filter(published=True).order_by('-pub_date')[:5]
-    context = {'posts': latest_posts}
+    return pagination(request, 1)
+
+
+def pagination(request, pagination):
+    page = int(pagination)
+    published_posts = Post.objects.filter(published=True).order_by('-pub_date')
+    paginator = Paginator(published_posts, POSTS_PER_PAGE)
+
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+
+    context = {
+        'posts': posts
+    }
     return render(request, 'blog/index.html', context)
 
 
