@@ -3,11 +3,13 @@ from mistune import Markdown
 
 # Register your models here.
 from .models import Post, Page, SocialLink
-from .markdown import FigureRenderer, FigureInlineLexer
+from .markdown import PostRenderer, PostInlineLexer
 
-renderer = FigureRenderer()
-inline = FigureInlineLexer(renderer)
+renderer = PostRenderer()
+inline = PostInlineLexer(renderer)
+inline.enable_woo()
 inline.enable_figure()
+
 markdown = Markdown(renderer, inline=inline, escape=False)
 
 
