@@ -36,12 +36,12 @@
   {% endfor %}
 </div>
 {% if posts.has_previous %}
-<a class="mdl-button mdl-js-button mdl-button--icon" href="{% url 'pagination' posts.number|add:-1 %}">
+<a class="mdl-button mdl-js-button mdl-button--icon" href="{% url 'index_pagination' posts.number|add:-1 %}">
   <i class="material-icons">chevron_left</i>
 </a>
 {% endif %}
 {% if posts.has_next %}
-<a class="mdl-button mdl-js-button mdl-button--icon" href="{% url 'pagination' posts.number|add:1 %}">
+<a class="mdl-button mdl-js-button mdl-button--icon" href="{% url 'index_pagination' posts.number|add:1 %}">
   <i class="material-icons">chevron_right</i>
 </a>
 {% endif %}

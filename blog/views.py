@@ -10,13 +10,13 @@ POSTS_PER_PAGE = 5
 
 
 def index(request):
-    return pagination(request, 1)
+    return index_pagination(request, 1)
 
 
-def pagination(request, pagination):
+def index_pagination(request, pagination):
     page = int(pagination)
-    published_posts = Post.objects.filter(published=True).order_by('-pub_date')
-    paginator = Paginator(published_posts, POSTS_PER_PAGE)
+    posts_published = Post.objects.filter(published=True).order_by('-pub_date')
+    paginator = Paginator(posts_published, POSTS_PER_PAGE)
 
     try:
         posts = paginator.page(page)
@@ -39,9 +39,26 @@ def post(request, post_slug):
 
 
 def tag(request, tag_slug):
-    posts = Post.objects.filter(published=True).filter(tags__slug__in=[tag_slug]).all()
+    return tag_pagination(request, tag_slug, 1)
+
+
+def tag_pagination(request, tag_slug, pagination):
+    page = int(pagination)
+    posts_with_tag = Post.objects.filter(published=True).filter(tags__slug__in=[tag_slug]).order_by('-pub_date').all()
+    paginator = Paginator(posts_with_tag, POSTS_PER_PAGE)
+
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+
     tag = Tag.objects.get(slug=tag_slug)
-    context = {'posts': posts, 'tag': tag}
+    context = {
+        'posts': posts,
+        'tag': tag
+    }
     return render(request, 'blog/tag.html', context)
 
 

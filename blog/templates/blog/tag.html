@@ -36,5 +36,15 @@
   </div>
   {% endfor %}
 </div>
+{% if posts.has_previous %}
+<a class="mdl-button mdl-js-button mdl-button--icon" href="{% url 'tag_pagination' tag.slug posts.number|add:-1 %}">
+  <i class="material-icons">chevron_left</i>
+</a>
+{% endif %}
+{% if posts.has_next %}
+<a class="mdl-button mdl-js-button mdl-button--icon" href="{% url 'tag_pagination' tag.slug posts.number|add:1 %}">
+  <i class="material-icons">chevron_right</i>
+</a>
+{% endif %}
 {% endif %}
 {% endblock %}
