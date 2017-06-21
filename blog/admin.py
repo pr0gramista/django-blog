@@ -1,13 +1,19 @@
 from django.contrib import admin
-from mistune import markdown
+from mistune import Markdown
 
 # Register your models here.
 from .models import Post, Page, SocialLink
+from .markdown import FigureRenderer, FigureInlineLexer
+
+renderer = FigureRenderer()
+inline = FigureInlineLexer(renderer)
+inline.enable_figure()
+markdown = Markdown(renderer, inline=inline, escape=False)
 
 
 class PostAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
-        obj.content = markdown(obj.raw_content, escape=False)
+        obj.content = markdown(obj.raw_content)
         obj.save()
 
 

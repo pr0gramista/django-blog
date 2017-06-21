@@ -58,6 +58,15 @@ body {
   max-width: 100%;
   margin: auto; }
 
+.post figure {
+  display: block;
+  max-width: 100%;
+  width: 90%;
+  margin: auto; }
+  .post figure div {
+    margin-top: 5px;
+    font-style: italic; }
+
 .post .header {
   width: 80%;
   min-height: 300px;
