@@ -53,6 +53,11 @@ body {
 .mdl-mini-footer {
   background: none; }
 
+.post img {
+  display: block;
+  max-width: 100%;
+  margin: auto; }
+
 .post .header {
   width: 80%;
   min-height: 300px;

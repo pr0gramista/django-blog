@@ -7,7 +7,7 @@ from .models import Post, Page, SocialLink
 
 class PostAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
-        obj.content = markdown(obj.raw_content)
+        obj.content = markdown(obj.raw_content, escape=False)
         obj.save()
 
 
