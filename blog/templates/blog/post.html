@@ -27,5 +27,20 @@
     </a>
     {% endfor %}
   </div>
+  <div id="disqus_thread"></div>
+  <script>
+  var disqus_config = function () {
+    this.page.url = location.origin + '{{ request.path }}';
+    this.page.identifier = location.origin + '{{ request.path }}';
+  };
+
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://pr0gramista.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Komentarze wymagają JavaScripta :C</noscript>
 </article>
 {% endblock %}
