@@ -14,14 +14,10 @@ class Post(models.Model):
         max_length=80, default='rgba(0, 0, 0, 0.5)', verbose_name="Kolor tła tytułu")
     fullwidth = models.BooleanField(
         default=True, verbose_name="Pełna szerokość strony (usuwa boczny panel)")
-    image = ProcessedImageField(
-        upload_to='images/posts',
-        default='',
-        verbose_name="Główny obrazek",
-        processors=[ResizeToFill(1024, 576, upscale=False), UpscaleToFit(
-            512, 288), ResizeCanvas(1024, 576, color=(255, 255, 255))],
-        format='JPEG',
-        options={'quality': 80})
+    image = models.ForeignKey(
+        'HeaderImage',
+        on_delete=models.DO_NOTHING,
+        verbose_name="Główny obrazek")
     pub_date = models.DateTimeField(verbose_name="Data publikacji")
     raw_content = models.TextField(verbose_name="Zawartość surowa")
     content = models.TextField(verbose_name="Zawartość", default='', blank=True)
@@ -50,3 +46,14 @@ class SocialLink(models.Model):
         processors=[ResizeToFit(300, 300)],
         format='PNG')
     order = models.IntegerField(verbose_name="Kolejność", default=10)
+
+class HeaderImage(models.Model):
+    image = ProcessedImageField(
+        upload_to='images/posts',
+        verbose_name="Obrazek",
+        processors=[ResizeToFill(1024, 576, upscale=False), UpscaleToFit(
+            512, 288), ResizeCanvas(1024, 576, color=(255, 255, 255))],
+        format='JPEG',
+        options={'quality': 80})
+    def __str__(self):
+        return self.image.name

@@ -19,7 +19,7 @@
     </style>
     <div class="post-widget mdl-shadow--3dp" id="{{post.slug}}">
       <a href="{% url 'post' post.slug %}">
-        <img src="{{ post.image.url }}"/>
+        <img src="{{ post.image.image.url }}"/>
         <div class="post-widget-tags">
           {% for tag in post.tags.all %}
           <a href="{% url 'tag' tag.slug %}">

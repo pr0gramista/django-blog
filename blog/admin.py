@@ -2,7 +2,7 @@ from django.contrib import admin
 from mistune import Markdown
 
 # Register your models here.
-from .models import Post, Page, SocialLink
+from .models import Post, Page, SocialLink, HeaderImage
 from .markdown import PostRenderer, PostInlineLexer
 
 renderer = PostRenderer()
@@ -22,3 +22,4 @@ class PostAdmin(admin.ModelAdmin):
 admin.site.register(Post, PostAdmin)
 admin.site.register(Page)
 admin.site.register(SocialLink)
+admin.site.register(HeaderImage)
