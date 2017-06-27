@@ -1,0 +1,34 @@
+{% extends "blog/base.html" %}
+
+{% block title %}{{ tag.name }} | PR0GRAMISTA{% endblock %}
+
+{% block content %}
+<div class="not-found">
+  <span id="kod">404</span>
+  <br/>
+  Aby zobaczyć zawartość tej strony WWW należy przeznaczyć 5 (pięć) BitCoinów na <span id="place"></span>
+
+  <div class="random">
+    A to jest losowe zdjęcie:
+    <img src="https://unsplash.it/600/400/?random" alt="Losowe zdjęcie" />
+  </div>
+</div>
+<script>
+messages = [
+  'Fundacje Pomocy Programistom Flash',
+  'Organizacje Hakerów Zjednoczonych',
+  'Wielką Orkiestrę Dział Jonowych',
+  'adres pocztowy mojego kota',
+  'akcję STOP JAVASCRIPT',
+  'akcję 10 kaw mniej',
+  'Fundusz Pomocy Pamięci RAM imienia Java 5.0',
+  'Fundacje [KUP DLC]',
+  'skrzynki w CS\'Ssie',
+  'Magiczny Portal do Netheru',
+  'drzwi dla ulubionego Simsa',
+  'Ruch Przeciwko WIELKIM KORPO'
+]
+
+document.getElementById('place').innerHTML = messages[Math.floor(Math.random() * messages.length)]
+</script>
+{% endblock %}

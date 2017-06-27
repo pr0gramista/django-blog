@@ -22,6 +22,33 @@ article.main img {
   }
 }
 
+.not-found {
+  text-align: center;
+  font-size: 20px;
+  line-height: 1.4;
+  margin: 20px;
+  #kod {
+    font-size: 60px;
+    margin-bottom: 10px;
+  }
+  .random {
+    margin: 10px;
+    width: 80%;
+    max-width: 800px;
+    margin: auto;
+    img {
+      width: 100%;
+      margin: 10px;
+    }
+  }
+  #place {
+    font-style: oblique;
+    font-weight: bold;
+    display: block;
+    margin: 10px;
+  }
+}
+
 .container {
   max-width: 1100px;
   width: 95%;
