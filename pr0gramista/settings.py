@@ -68,6 +68,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'blog.context_processors.page_list',
                 'blog.context_processors.social_links',
+                'blog.context_processors.analytics',
             ],
         },
     },
@@ -125,3 +126,5 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = config.MEDIA_ROOT
+
+ANALYTICS = config.ANALYTICS

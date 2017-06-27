@@ -1,4 +1,5 @@
 from django.http import HttpRequest
+from django.conf import settings
 
 from .models import Page, SocialLink
 
@@ -12,4 +13,9 @@ def page_list(request):
 def social_links(request):
     return {
         "social_links": SocialLink.objects.order_by('order')
+    }
+
+def analytics(request):
+    return {
+        "analytics": settings.ANALYTICS
     }

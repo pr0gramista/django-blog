@@ -24,3 +24,5 @@ secret = r'=0fcb5b%3wiqj6v&@yc(8lg8mwh5k#vb^ib1brux+em$t$q8_t'
 debug = True
 
 MEDIA_ROOT = ''
+
+ANALYTICS = 'UA-XXXXX'
