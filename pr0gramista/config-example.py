@@ -23,6 +23,9 @@ secret = r'=0fcb5b%3wiqj6v&@yc(8lg8mwh5k#vb^ib1brux+em$t$q8_t'
 
 debug = True
 
+# If debug is False this list must be filled
+ALLOWED_HOSTS = []
+
 MEDIA_ROOT = ''
 
 ANALYTICS = 'UA-XXXXX'
