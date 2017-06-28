@@ -4,6 +4,9 @@
 
 {% block content %}
 <article class="post">
+  {% if not post.published %}
+  <div class="red-ribbon">Niepublikowane</div>
+  {% endif %}
   <div class="header-fake" style="background-image: url({{ post.image.image.url }});"></div>
   <div class="header">
     <div class="title-wrapper">

@@ -20,6 +20,9 @@
     </style>
     <div class="post-widget mdl-shadow--3dp" id="{{post.slug}}">
       <a href="{% url 'post' post.slug %}">
+        {% if not post.published %}
+        <div class="red-ribbon">Niepublikowane</div>
+        {% endif %}
         <img src="{{ post.image.image.url }}"/>
         <div class="post-widget-tags">
           {% for tag in post.tags.all %}

@@ -3,12 +3,15 @@ from django.urls import reverse
 from django.test.utils import setup_test_environment
 from django.utils import timezone
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.contrib.auth.models import User
 
 example_image = SimpleUploadedFile(name='test.png', content=open(
     'test.png', 'rb').read(), content_type='image/jpeg')
 
 from .models import Post, HeaderImage
 
+def get_test_user_tom():
+    return User.objects.create_user('tom', 'tom@tomland.tomland', 'tomsecuredpassword')
 
 def add_post(title, published, content, fullwidth=True):
     headerImage = HeaderImage.objects.create(
@@ -53,6 +56,22 @@ class IndexViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertQuerysetEqual(response.context['posts'], [])
 
+    def test_private_posts_when_logged_in(self):
+        """
+        If user is logged in all posts should be displayed
+        """
+        self.client.force_login(get_test_user_tom())
+        add_post('Good post', True, 'This is a new content!')
+        add_post('Nice post', True, 'This is a new content!')
+        add_post('Bad post', False, 'This is a new content!')
+        add_post('Awesome post', True, 'This is a new content!')
+
+        response = self.client.get(reverse('index'))
+        self.assertEqual(response.status_code, 200)
+        self.assertQuerysetEqual(
+            response.context['posts'],
+            ['<Post: Awesome post>', '<Post: Bad post>', '<Post: Nice post>', '<Post: Good post>'])
+
 
 class PostViewTests(TestCase):
     def test_published_post(self):
@@ -82,11 +101,21 @@ class PostViewTests(TestCase):
 
     def test_no_private_post(self):
         """
-        Unpublished post should not be displayed in any form
+        Unpublished post should not be displayed in any form for unauthorized users
         """
         post = add_post('bad post', False, 'This is a private post')
 
         response = self.client.get(reverse('post', args=post.slug))
         self.assertEqual(response.status_code, 404)
+
+    def test_private_post_when_logged_in(self):
+        """
+        Unpublished post should displayed for logged in user
+        """
+        self.client.force_login(get_test_user_tom())
+        post = add_post('bad post', False, 'This is a private post')
+
+        response = self.client.get(reverse('post', args=post.slug))
+        self.assertEqual(response.status_code, 200)
 
 # Create your tests here.

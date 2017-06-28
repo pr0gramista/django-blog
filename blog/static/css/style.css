@@ -5,6 +5,13 @@
 .featured-image {
   display: inline-block; }
 
+.red-ribbon {
+  width: 100%;
+  min-height: 14px;
+  text-align: center;
+  background-color: #E53935;
+  color: #FFF; }
+
 .icon-button img {
   width: 36px;
   height: 36px; }

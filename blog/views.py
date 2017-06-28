@@ -15,7 +15,10 @@ def index(request):
 
 def index_pagination(request, pagination):
     page = int(pagination)
-    posts_published = Post.objects.filter(published=True).order_by('-pub_date')
+    if not request.user.is_authenticated:
+        posts_published = Post.objects.filter(published=True).order_by('-pub_date')
+    else:
+        posts_published = Post.objects.order_by('-pub_date')
     paginator = Paginator(posts_published, POSTS_PER_PAGE)
 
     try:
@@ -32,7 +35,10 @@ def index_pagination(request, pagination):
 
 
 def post(request, post_slug):
-    query = Post.objects.filter(published=True)
+    if not request.user.is_authenticated:
+        query = Post.objects.filter(published=True)
+    else:
+        query = Post.objects.all()
     post = get_object_or_404(query, slug=post_slug)
     context = {'post': post}
     return render(request, 'blog/post.html', context)
@@ -44,7 +50,10 @@ def tag(request, tag_slug):
 
 def tag_pagination(request, tag_slug, pagination):
     page = int(pagination)
-    posts_with_tag = Post.objects.filter(published=True).filter(tags__slug__in=[tag_slug]).order_by('-pub_date').all()
+    if not request.user.is_authenticated:
+        posts_with_tag = Post.objects.filter(published=True).filter(tags__slug__in=[tag_slug]).order_by('-pub_date').all()
+    else:
+        posts_with_tag = Post.objects.filter(tags__slug__in=[tag_slug]).order_by('-pub_date').all()
     paginator = Paginator(posts_with_tag, POSTS_PER_PAGE)
 
     try:
