@@ -7,16 +7,20 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 example_image = SimpleUploadedFile(name='test.png', content=open(
     'test.png', 'rb').read(), content_type='image/jpeg')
 
-from .models import Post
+from .models import Post, HeaderImage
 
 
 def add_post(title, published, content, fullwidth=True):
+    headerImage = HeaderImage.objects.create(
+        image=example_image
+    )
+
     return Post.objects.create(
         title=title,
         slug=title.replace(' ', '-')[0],
         title_size=42,
         title_background='rgba(0, 0, 0, 0.5)',
-        image=example_image,
+        image=headerImage,
         pub_date=timezone.now(),
         published=published,
         fullwidth=fullwidth,
