@@ -16,6 +16,9 @@
     </div>
   </div>
   {{ post.content|safe }}
+  <div class="date">
+    {{ post.pub_date|date:'d E Y' }}
+  </div>
   <div>
     <style scoped>
     a {
