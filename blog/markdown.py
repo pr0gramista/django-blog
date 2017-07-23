@@ -2,9 +2,15 @@ import re
 from mistune import Renderer, InlineGrammar, InlineLexer
 
 
+import logging
+logger = logging.getLogger(__name__)
+
 class PostRenderer(Renderer):
     def figure(self, text, link, alt):
         return '<figure><img src="%s" alt="%s" /><div>%s</div></figure>' % (link, alt, text)
+
+    def emdash(self):
+        return '\u2014'
 
     def woo(self, text, link, icon, color, clazz):
         return '''
@@ -36,6 +42,15 @@ class PostInlineLexer(InlineLexer):
         clazz = m.group(4)
         link = m.group(5)
         return self.renderer.woo(text=text, icon=icon, color=color, clazz=clazz, link=link)
+
+    def enable_emdash(self):
+        self.rules.emdash = re.compile(
+            r'!--'
+        )
+        self.default_rules.insert(3, 'emdash')
+
+    def output_emdash(self, m):
+        return self.renderer.emdash()
 
     def enable_figure(self):
         self.rules.figure = re.compile(

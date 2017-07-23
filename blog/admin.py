@@ -8,6 +8,7 @@ from .markdown import PostRenderer, PostInlineLexer
 renderer = PostRenderer()
 inline = PostInlineLexer(renderer)
 inline.enable_woo()
+inline.enable_emdash()
 inline.enable_figure()
 
 markdown = Markdown(renderer, inline=inline, escape=False)
