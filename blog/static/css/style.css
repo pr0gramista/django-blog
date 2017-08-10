@@ -125,7 +125,7 @@ body {
   display: block;
   max-width: 100%;
   width: 90%;
-  margin: auto; }
+  margin: 12px auto; }
   .post figure div {
     margin-top: 5px;
     font-style: italic; }
