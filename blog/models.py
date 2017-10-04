@@ -4,6 +4,12 @@ from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFit, ResizeToFill, ResizeCanvas
 from .imagekit import UpscaleToFit
 
+post_help_text = """
+Markdown editor with some special tags:</br>
+!-- makes an endash –</br>
+![text][alt](img url) makes a figure</br>
+!F[text][icon name][color without #][class (can be empty)](link)</br>
+"""
 
 class Post(models.Model):
     title = models.CharField(max_length=200, verbose_name="Tytuł")
@@ -19,7 +25,7 @@ class Post(models.Model):
         on_delete=models.DO_NOTHING,
         verbose_name="Główny obrazek")
     pub_date = models.DateTimeField(verbose_name="Data publikacji")
-    raw_content = models.TextField(verbose_name="Zawartość surowa")
+    raw_content = models.TextField(verbose_name="Zawartość surowa", help_text=post_help_text)
     content = models.TextField(verbose_name="Zawartość", default='', blank=True)
     published = models.BooleanField(verbose_name="Opublikowany", default=False)
     tags = TaggableManager()
