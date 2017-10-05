@@ -1,3 +1,25 @@
+blockquote {
+  p {
+    font-size: 16px;
+  }
+  display: inline-block;
+  padding: 10px;
+  &::before {
+    font-size: 40px;
+    left: -.5em;
+    top: -0.25em;
+    position: absolute;
+    content: '“';
+  }
+  &::after {
+    content: '”';
+    font-size: 40px;
+    position: absolute;
+    right: -0.5em;
+    bottom: -0.35em;
+  }
+}
+
 .title {
   font-family: 'Inconsolata', monospace;
   font-size: 32px;
