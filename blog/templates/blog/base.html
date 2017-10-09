@@ -70,9 +70,11 @@
               <div class="sidebar-tags mdl-shadow--3dp">
                 <div class="title">Najpopularniejsze tagi</div>
                 {% for tag in tags %}
+                <a href="{% url 'tag' tag.slug %}">
                   <span class="mdl-chip">
-                    <span class="mdl-chip__text">{{ tag }}</span>
+                    <span class="mdl-chip__text">{{ tag.name }}</span>
                   </span>
+                </a>
                 {% endfor %}
               </div>
             </div>
