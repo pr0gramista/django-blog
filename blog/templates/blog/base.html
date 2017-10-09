@@ -67,6 +67,14 @@
                 <div class="title">Napisz do mnie!</div>
                 <div class="email"><a href="mailto:kontakt@pr0gramista.pl">kontakt@pr0gramista.pl</a></div>
               </div>
+              <div class="sidebar-tags mdl-shadow--3dp">
+                <div class="title">Najpopularniejsze tagi</div>
+                {% for tag in tags %}
+                  <span class="mdl-chip">
+                    <span class="mdl-chip__text">{{ tag }}</span>
+                  </span>
+                {% endfor %}
+              </div>
             </div>
           </div>
         </div>

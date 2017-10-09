@@ -252,3 +252,10 @@ body {
     .sidebar-mail .email {
       font-size: 28px;
       margin: 10px 0; }
+  .sidebar-tags {
+    text-align: center;
+    padding: 20px 10px; }
+    .sidebar-tags .title {
+      font-family: 'Inconsolata';
+      font-size: 20px;
+      margin-bottom: 10px; }
