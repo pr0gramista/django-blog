@@ -1,10 +1,10 @@
 from django.contrib import admin
 from mistune import Markdown
 
-# Register your models here.
 from .models import Post, Page, SocialLink, HeaderImage
 from .markdown import PostRenderer, PostInlineLexer
 
+# Add custom markdown renderer
 renderer = PostRenderer()
 inline = PostInlineLexer(renderer)
 inline.enable_woo()

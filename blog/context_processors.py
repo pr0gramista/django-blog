@@ -1,4 +1,3 @@
-from django.http import HttpRequest
 from django.conf import settings
 
 from .models import Page, SocialLink, Post
@@ -10,15 +9,18 @@ def page_list(request):
         "pages": Page.objects.order_by('order')
     }
 
+
 def tags_list(request):
     return {
         "tags": Post.tags.most_common()[:5]
     }
 
+
 def social_links(request):
     return {
         "social_links": SocialLink.objects.order_by('order')
     }
+
 
 def analytics(request):
     return {

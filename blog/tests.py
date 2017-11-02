@@ -1,19 +1,29 @@
-from django.test import TestCase, Client
+from django.test import TestCase
 from django.urls import reverse
-from django.test.utils import setup_test_environment
 from django.utils import timezone
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.contrib.auth.models import User
+from .models import Post, HeaderImage
 
 example_image = SimpleUploadedFile(name='test.png', content=open(
     'test.png', 'rb').read(), content_type='image/jpeg')
 
-from .models import Post, HeaderImage
 
 def get_test_user_tom():
     return User.objects.create_user('tom', 'tom@tomland.tomland', 'tomsecuredpassword')
 
+
 def add_post(title, published, content, fullwidth=True):
+    """
+    Create and return post with given arguments
+
+    :param title: Title for post
+    :type title: string
+    :param published: should post be published
+    :type published: boolean
+    :param content: final content of the post
+    :type content: string
+    """
     headerImage = HeaderImage.objects.create(
         image=example_image
     )
@@ -33,9 +43,7 @@ def add_post(title, published, content, fullwidth=True):
 
 class IndexViewTests(TestCase):
     def test_no_private_posts(self):
-        """
-        Unpublished posts should not be displayed in any form
-        """
+        """Unpublished posts should not be displayed in any form."""
         add_post('Good post', True, 'This is a new content!')
         add_post('Nice post', True, 'This is a new content!')
         add_post('Bad post', False, 'This is a new content!')
@@ -117,5 +125,3 @@ class PostViewTests(TestCase):
 
         response = self.client.get(reverse('post', args=post.slug))
         self.assertEqual(response.status_code, 200)
-
-# Create your tests here.

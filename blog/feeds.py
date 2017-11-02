@@ -1,6 +1,7 @@
 from django.contrib.syndication.views import Feed
 from django.urls import reverse
 from taggit.models import Tag
+
 from .models import Post
 
 
@@ -26,7 +27,6 @@ class LatestPostsFeed(Feed):
 
 
 class TagPostsFeed(Feed):
-
     def get_object(self, request, tag_slug):
         return Tag.objects.get(slug=tag_slug)
 

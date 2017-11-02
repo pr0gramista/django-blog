@@ -11,6 +11,7 @@ Markdown editor with some special tags:</br>
 !F[text][icon name][color without #][class (can be empty)](link)</br>
 """
 
+
 class Post(models.Model):
     title = models.CharField(max_length=200, verbose_name="Tytuł")
     slug = models.SlugField(default='')
@@ -52,6 +53,7 @@ class SocialLink(models.Model):
         processors=[ResizeToFit(300, 300)],
         format='PNG')
     order = models.IntegerField(verbose_name="Kolejność", default=10)
+
 
 class HeaderImage(models.Model):
     image = ProcessedImageField(
