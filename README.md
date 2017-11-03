@@ -1,4 +1,4 @@
-# Blog engine for [pr0gramista.pl](https://pr0gramista.pl)
+# Blog engine for [pr0gramista.pl](https://pr0gramista.pl) ![Travis CI status](https://travis-ci.org/pr0gramista/pr0gramista.svg?branch=master)
 Written in Python, powered by django.
 
 ### Easy config
