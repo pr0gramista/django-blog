@@ -1,3 +1,4 @@
+# coding=utf8
 from django.db import models
 from taggit.managers import TaggableManager
 from imagekit.models import ImageSpecField, ProcessedImageField
