@@ -24,8 +24,15 @@ def unpublish(modeladmin, request, queryset):
     unpublish.short_description = "Set to unpublished"
 
 
+def refresh_markdown(modeladmin, request, queryset):
+    refresh_markdown.short_description = "Refresh markdown"
+
+    for q in queryset:
+        PostAdmin.save_model(modeladmin, request, q, None, None)
+
+
 class PostAdmin(admin.ModelAdmin):
-    actions = [publish, unpublish]
+    actions = [publish, unpublish, refresh_markdown]
 
     def save_model(self, request, obj, form, change):
         obj.content = markdown(obj.raw_content)
