@@ -14,7 +14,19 @@ inline.enable_figure()
 markdown = Markdown(renderer, inline=inline, escape=False)
 
 
+def publish(modeladmin, request, queryset):
+    queryset.update(published=True)
+    publish.short_description = "Set to published"
+
+
+def unpublish(modeladmin, request, queryset):
+    queryset.update(published=False)
+    unpublish.short_description = "Set to unpublished"
+
+
 class PostAdmin(admin.ModelAdmin):
+    actions = [publish, unpublish]
+
     def save_model(self, request, obj, form, change):
         obj.content = markdown(obj.raw_content)
         obj.save()
