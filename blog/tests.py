@@ -138,6 +138,7 @@ class MarkdownEditorTests(TestCase):
         inline.enable_woo()
         inline.enable_emdash()
         inline.enable_figure()
+        inline.enable_gallery()
 
         self.markdown = Markdown(renderer, inline=inline, escape=False)
 
@@ -188,5 +189,29 @@ class MarkdownEditorTests(TestCase):
                           "    </div>\n"
                           "  </div></a>\n"
                           "</div>")
+
+        self.assertHTMLEqual(output, correct_output)
+
+    def test_custom_gallery_markdown_tags(self):
+        test_string = ("Gallery[http://via.placeholder.com/350x150,"
+                       "http://via.placeholder.com/350x200, http://via.placeholder.com/350x250,"
+                       "http://via.placeholder.com/350x300, http://via.placeholder.com/350x350]")
+        output = self.markdown.render(test_string)
+
+        correct_output = ('<p>'
+                          '<div class="gallery">'
+                          ' <div class="gallery-buttons">'
+                          '   <button class="gallery-button gallery-button-left"><i '
+                          'class="material-icons">chevron_left</i></button>'
+                          '   <button class="gallery-button gallery-button-right"><i '
+                          'class="material-icons">chevron_right</i></button>'
+                          ' </div>'
+                          ' <img src="http://via.placeholder.com/350x150">'
+                          ' <img src="http://via.placeholder.com/350x200">'
+                          ' <img src="http://via.placeholder.com/350x250">'
+                          ' <img src="http://via.placeholder.com/350x300">'
+                          ' <img src="http://via.placeholder.com/350x350">'
+                          '</div>'
+                          '</p>')
 
         self.assertHTMLEqual(output, correct_output)
