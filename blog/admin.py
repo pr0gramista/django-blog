@@ -1,8 +1,8 @@
 from django.contrib import admin
 from mistune import Markdown
 
-from .models import Post, Page, SocialLink, HeaderImage
 from .markdown import PostRenderer, PostInlineLexer
+from .models import Post, Page, SocialLink, HeaderImage
 
 # Add custom markdown renderer
 renderer = PostRenderer()
@@ -10,6 +10,7 @@ inline = PostInlineLexer(renderer)
 inline.enable_woo()
 inline.enable_emdash()
 inline.enable_figure()
+inline.enable_gallery()
 
 markdown = Markdown(renderer, inline=inline, escape=False)
 

@@ -1,8 +1,9 @@
-import re
-from mistune import Renderer, InlineGrammar, InlineLexer
-
-
 import logging
+import re
+
+from django.template import engines
+from mistune import Renderer, InlineLexer
+
 logger = logging.getLogger(__name__)
 
 class PostRenderer(Renderer):
@@ -24,6 +25,26 @@ class PostRenderer(Renderer):
                  </div></a>
                </div>
                ''' % (color, link, clazz, icon, text)
+
+    def gallery(self, links):
+        gallery_template = """
+        <div class="gallery">
+         <div class="gallery-buttons">
+           <button class="gallery-button gallery-button-left"><i 
+           class="material-icons">chevron_left</i></button>
+           <button class="gallery-button gallery-button-right"><i 
+           class="material-icons">chevron_right</i></button>
+         </div>
+         {% for link in links %}
+         <img src="{{ link }}">
+         {% endfor %}
+        </div>
+        """
+
+        django_engine = engines['django']
+        return django_engine.from_string(gallery_template).render({
+            'links': links
+        })
 
 
 class PostInlineLexer(InlineLexer):
@@ -63,3 +84,12 @@ class PostInlineLexer(InlineLexer):
         alt = m.group(2)
         link = m.group(3)
         return self.renderer.figure(text, link, alt)
+
+    def enable_gallery(self):
+        self.rules.gallery = re.compile(r'Gallery\[(.*)\]')
+        self.default_rules.insert(3, 'gallery')
+
+    def output_gallery(self, m):
+        inside = m.group(1)
+
+        return self.renderer.gallery([link.strip() for link in inside.split(',')])
