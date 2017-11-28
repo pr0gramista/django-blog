@@ -91,5 +91,16 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
   {% include "blog/analytics.html" %}
+  <script>
+      document.querySelector(".gallery-more > button").addEventListener('click', function (event) {
+          document.querySelector(".gallery").classList.remove("less");
+          document.querySelector(".gallery").classList.add("more");
+      });
+
+      document.querySelector(".gallery-less > button").addEventListener('click', function (event) {
+          document.querySelector(".gallery").classList.remove("more");
+          document.querySelector(".gallery").classList.add("less");
+      });
+  </script>
 </body>
 </html>

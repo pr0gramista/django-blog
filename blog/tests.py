@@ -1,12 +1,12 @@
+from django.contrib.auth.models import User
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
-from django.core.files.uploadedfile import SimpleUploadedFile
-from django.contrib.auth.models import User
 from mistune import Markdown
-from .models import Post, HeaderImage
-from .markdown import PostRenderer, PostInlineLexer
 
+from .markdown import PostRenderer, PostInlineLexer
+from .models import Post, HeaderImage
 
 example_image = SimpleUploadedFile(name='test.png', content=open(
     'test.png', 'rb').read(), content_type='image/jpeg')
@@ -199,18 +199,31 @@ class MarkdownEditorTests(TestCase):
         output = self.markdown.render(test_string)
 
         correct_output = ('<p>'
-                          '<div class="gallery">'
-                          ' <div class="gallery-buttons">'
-                          '   <button class="gallery-button gallery-button-left"><i '
-                          'class="material-icons">chevron_left</i></button>'
-                          '   <button class="gallery-button gallery-button-right"><i '
-                          'class="material-icons">chevron_right</i></button>'
-                          ' </div>'
-                          ' <img src="http://via.placeholder.com/350x150">'
-                          ' <img src="http://via.placeholder.com/350x200">'
-                          ' <img src="http://via.placeholder.com/350x250">'
-                          ' <img src="http://via.placeholder.com/350x300">'
-                          ' <img src="http://via.placeholder.com/350x350">'
+                          '<div class="gallery less">'
+                          '  <div class="gallery-content mdl-grid">'
+                          '    <div class="gallery-shadow"></div>'
+                          '    <div class="mdl-cell mdl-cell--4-col">'
+                          '      <img src="http://via.placeholder.com/350x150">'
+                          '    </div>'
+                          '    <div class="mdl-cell mdl-cell--4-col">'
+                          '      <img src="http://via.placeholder.com/350x200">'
+                          '    </div>'
+                          '    <div class="mdl-cell mdl-cell--4-col">'
+                          '      <img src="http://via.placeholder.com/350x250">'
+                          '    </div>'
+                          '    <div class="mdl-cell mdl-cell--4-col">'
+                          '      <img src="http://via.placeholder.com/350x300">'
+                          '    </div>'
+                          '    <div class="mdl-cell mdl-cell--4-col">'
+                          '      <img src="http://via.placeholder.com/350x350">'
+                          '    </div>'
+                          '  </div>'
+                          '  <div class="gallery-more">'
+                          '    <button><i class="material-icons">expand_more</i></button>'
+                          '  </div>'
+                          '  <div class="gallery-less">'
+                          '    <button><i class="material-icons">expand_less</i></button>'
+                          '  </div>'
                           '</div>'
                           '</p>')
 

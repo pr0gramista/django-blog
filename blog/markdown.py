@@ -28,16 +28,21 @@ class PostRenderer(Renderer):
 
     def gallery(self, links):
         gallery_template = """
-        <div class="gallery">
-         <div class="gallery-buttons">
-           <button class="gallery-button gallery-button-left"><i 
-           class="material-icons">chevron_left</i></button>
-           <button class="gallery-button gallery-button-right"><i 
-           class="material-icons">chevron_right</i></button>
-         </div>
-         {% for link in links %}
-         <img src="{{ link }}">
-         {% endfor %}
+        <div class="gallery less">
+          <div class="gallery-content mdl-grid">
+            <div class="gallery-shadow"></div>
+            {% for link in links %}
+            <div class="mdl-cell mdl-cell--4-col">
+              <img src="{{ link }}">
+            </div>
+            {% endfor %}
+          </div>
+          <div class="gallery-more">
+            <button><i class="material-icons">expand_more</i></button>
+          </div>
+          <div class="gallery-less">
+            <button><i class="material-icons">expand_less</i></button>
+          </div>
         </div>
         """
 

@@ -263,6 +263,65 @@ body {
   }
 }
 
+.gallery {
+  .gallery-content {
+    transition: max-height 0.5s linear;
+    margin-bottom: 10px;
+    position: relative;
+  }
+
+  .gallery-shadow {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transition: linear-gradient 1s linear;
+  }
+
+  &.more {
+    .gallery-content {
+      max-height: 2000px;
+    }
+
+    .gallery-more {
+      display: none;
+    }
+
+    .gallery-shadow {
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 90%, rgba(0, 0, 0, 0));
+    }
+  }
+  &.less {
+    .gallery-content {
+      max-height: 250px;
+      overflow: hidden;
+    }
+
+    .gallery-less {
+      display: none;
+    }
+
+    .gallery-shadow {
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 90%, #FFFFFF);
+    }
+  }
+
+  .gallery-less, .gallery-more {
+    button {
+      border: none;
+      width: 100%;
+      height: 75px;
+      background: rgba(0, 0, 0, 0.75);
+      color: white;
+      .material-icons {
+        font-size: 48px;
+      }
+    }
+    z-index: 200;
+  }
+}
+
 .sidebar {
   z-index: 200;
   padding-top: 8px;

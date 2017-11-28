@@ -114,14 +114,14 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
   <script>
-  document.body.addEventListener('mdl-componentupgraded', (event) => {
+      document.body.addEventListener('mdl-componentupgraded', function (event) {
     if (event.target.className.split(' ').indexOf('mdl-js-layout') < 0) {
       return;
     }
     twttr.widgets.createTimeline(
       {
         sourceType: 'profile',
-        screenName: 'pr0gramista',
+          screenName: 'pr0gramista'
       },
       document.getElementById('twitter-timeline'),
       {
@@ -131,6 +131,17 @@
       }
     );
   })
+  </script>
+  <script>
+      document.querySelector(".gallery-more > button").addEventListener('click', function (event) {
+          document.querySelector(".gallery").classList.remove("less");
+          document.querySelector(".gallery").classList.add("more");
+      });
+
+      document.querySelector(".gallery-less > button").addEventListener('click', function (event) {
+          document.querySelector(".gallery").classList.remove("more");
+          document.querySelector(".gallery").classList.add("less");
+      });
   </script>
   {% include "blog/analytics.html" %}
 </body>
