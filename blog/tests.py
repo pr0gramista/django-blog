@@ -54,6 +54,7 @@ class IndexViewTests(TestCase):
 
         response = self.client.get(reverse('index'))
         self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "blog/index.html")
         self.assertQuerysetEqual(
             response.context['posts'],
             ['<Post: Awesome post>', '<Post: Nice post>', '<Post: Good post>']
@@ -65,6 +66,7 @@ class IndexViewTests(TestCase):
         """
         response = self.client.get(reverse('index'))
         self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "blog/index.html")
         self.assertQuerysetEqual(response.context['posts'], [])
 
     def test_private_posts_when_logged_in(self):
@@ -79,6 +81,7 @@ class IndexViewTests(TestCase):
 
         response = self.client.get(reverse('index'))
         self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "blog/index.html")
         self.assertQuerysetEqual(
             response.context['posts'],
             ['<Post: Awesome post>', '<Post: Bad post>', '<Post: Nice post>', '<Post: Good post>'])
@@ -91,6 +94,8 @@ class PostViewTests(TestCase):
         response = self.client.get(reverse('post', args=post.slug))
         self.assertEqual(response.status_code, 200)
         self.assertQuerysetEqual([response.context['post']], ['<Post: good post>'])
+        self.assertTemplateUsed(response, "blog/post.html")
+        self.assertEqual(response.context['post'].title, 'good post')
 
     def test_fullwidth_post(self):
         post = add_post('good post', True, 'This is public post', fullwidth=True)
@@ -100,6 +105,8 @@ class PostViewTests(TestCase):
         self.assertEqual(
             any(x for x in response.templates if '/base-fullwidth.html' in x.name),
             True)
+        self.assertTemplateUsed(response, "blog/post.html")
+        self.assertEqual(response.context['post'].title, 'good post')
 
     def test_no_fullwidth_post(self):
         post = add_post('bad post', True, 'This is public post', fullwidth=False)
@@ -109,6 +116,8 @@ class PostViewTests(TestCase):
         self.assertEqual(
             any(x for x in response.templates if '/base-fullwidth.html' in x.name),
             False)
+        self.assertTemplateUsed(response, "blog/post.html")
+        self.assertEqual(response.context['post'].title, 'bad post')
 
     def test_no_private_post(self):
         """
