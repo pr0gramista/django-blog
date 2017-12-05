@@ -1,3 +1,5 @@
+import xml.etree.ElementTree
+
 from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
@@ -137,6 +139,25 @@ class PostViewTests(TestCase):
 
         response = self.client.get(reverse('post', args=post.slug))
         self.assertEqual(response.status_code, 200)
+
+
+class RSSTests(TestCase):
+    def test_no_private_posts(self):
+        """Unpublished posts should not be present in XML."""
+        add_post('Good post', True, 'This is a new content!')
+        add_post('Nice post', True, 'This is a new content!')
+        add_post('Bad post', False, 'This is a new content!')
+        add_post('Awesome post', True, 'This is a new content!')
+
+        response = self.client.get('/rss/')
+        self.assertEqual(response.status_code, 200)
+
+        root = xml.etree.ElementTree.fromstring(response.content)
+        # Extract titles from posts as RSS (dirty)
+        titles = [[tag.text.strip() for tag in child if tag.tag == 'title'][0]
+                  for child in root[0] if child.tag == 'item']
+
+        self.assertNotIn('Bad post', titles)
 
 
 class MarkdownEditorTests(TestCase):
