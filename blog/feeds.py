@@ -11,7 +11,7 @@ class LatestPostsFeed(Feed):
     description = "Ostatnie posty na blogu PR0GRAMISTA.pl"
 
     def items(self):
-        return Post.objects.order_by('-pub_date').all()
+        return Post.objects.filter(published=True).order_by('-pub_date').all()
 
     def item_title(self, item):
         return item.title
