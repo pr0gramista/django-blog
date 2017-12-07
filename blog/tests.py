@@ -6,6 +6,7 @@ from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
 from mistune import Markdown
+from taggit.models import Tag
 
 from .markdown import PostRenderer, PostInlineLexer
 from .models import Post, HeaderImage
@@ -18,7 +19,7 @@ def get_test_user_tom():
     return User.objects.create_user('tom', 'tom@tomland.tomland', 'tomsecuredpassword')
 
 
-def add_post(title, published, content, fullwidth=True):
+def add_post(title, published, content, fullwidth=True, tags=None):
     """
     Create and return post with given arguments
 
@@ -33,7 +34,7 @@ def add_post(title, published, content, fullwidth=True):
         image=example_image
     )
 
-    return Post.objects.create(
+    post = Post.objects.create(
         title=title,
         slug=title.replace(' ', '-')[0],
         title_size=42,
@@ -44,6 +45,11 @@ def add_post(title, published, content, fullwidth=True):
         fullwidth=fullwidth,
         raw_content=content,
         content=content)
+
+    if tags is not None:
+        post.tags.add(*tags)
+
+    return post
 
 
 class IndexViewTests(TestCase):
@@ -149,7 +155,26 @@ class RSSTests(TestCase):
         add_post('Bad post', False, 'This is a new content!')
         add_post('Awesome post', True, 'This is a new content!')
 
-        response = self.client.get('/rss/')
+        response = self.client.get(reverse('rss_index'))
+        self.assertEqual(response.status_code, 200)
+
+        root = xml.etree.ElementTree.fromstring(response.content)
+        # Extract titles from posts as RSS (dirty)
+        titles = [[tag.text.strip() for tag in child if tag.tag == 'title'][0]
+                  for child in root[0] if child.tag == 'item']
+
+        self.assertNotIn('Bad post', titles)
+
+    def test_no_private_posts_tag(self):
+        """Unpublished posts should not be present in XML."""
+        test_tag = Tag.objects.create(name="Test", slug="test")
+
+        add_post('Good post', True, 'This is a new content!', tags=[test_tag])
+        add_post('Nice post', True, 'This is a new content!', tags=[test_tag])
+        add_post('Bad post', False, 'This is a new content!', tags=[test_tag])
+        add_post('Awesome post', True, 'This is a new content!', tags=[test_tag])
+
+        response = self.client.get(reverse('rss_tag', args=[test_tag.slug]))
         self.assertEqual(response.status_code, 200)
 
         root = xml.etree.ElementTree.fromstring(response.content)
