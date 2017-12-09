@@ -9,10 +9,10 @@ blockquote {
     left: -.5em;
     top: -0.25em;
     position: absolute;
-      content: '“';
+    content: 'ÔÇť';
   }
   blockquote::after {
-      content: '”';
+    content: 'ÔÇŁ';
     font-size: 40px;
     position: absolute;
     right: -0.5em;
@@ -214,7 +214,6 @@ body {
   margin-bottom: 10px;
   position: relative;
 }
-
 .gallery .gallery-shadow {
   position: absolute;
   width: 100%;
@@ -223,32 +222,25 @@ body {
   left: 0;
   transition: linear-gradient 1s linear;
 }
-
 .gallery.more .gallery-content {
-  max-height: 2000px;
+  max-height: 9999px;
 }
-
 .gallery.more .gallery-more {
   display: none;
 }
-
 .gallery.more .gallery-shadow {
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 90%, rgba(0, 0, 0, 0));
 }
-
 .gallery.less .gallery-content {
   max-height: 250px;
   overflow: hidden;
 }
-
 .gallery.less .gallery-less {
   display: none;
 }
-
 .gallery.less .gallery-shadow {
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 90%, #FFFFFF);
 }
-
 .gallery .gallery-less, .gallery .gallery-more {
   z-index: 200;
 }
