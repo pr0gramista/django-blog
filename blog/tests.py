@@ -147,6 +147,56 @@ class PostViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
 
 
+class TagTests(TestCase):
+    def test_no_private_posts(self):
+        """Unpublished posts should not be displayed in any form."""
+        test_tag = Tag.objects.create(name="Test", slug="test")
+
+        add_post('Good post', True, 'This is a new content!', tags=[test_tag])
+        add_post('Nice post', True, 'This is a new content!', tags=[test_tag])
+        add_post('Bad post', False, 'This is a new content!', tags=[test_tag])
+        add_post('Awesome post', True, 'This is a new content!', tags=[test_tag])
+
+        response = self.client.get(reverse('tag', args=[test_tag.slug]))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "blog/tag.html")
+        self.assertQuerysetEqual(
+            response.context['posts'],
+            ['<Post: Awesome post>', '<Post: Nice post>', '<Post: Good post>']
+        )
+
+    def test_no_posts(self):
+        """
+        If no post exist, just don't display anything
+        """
+        test_tag = Tag.objects.create(name="Test", slug="test")
+
+        response = self.client.get(reverse('tag', args=[test_tag.slug]))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "blog/tag.html")
+        self.assertQuerysetEqual(response.context['posts'], [])
+
+    def test_private_posts_when_logged_in(self):
+        """
+        If user is logged in all posts should be displayed
+        """
+        test_tag = Tag.objects.create(name="Test", slug="test")
+
+        self.client.force_login(get_test_user_tom())
+        add_post('Good post', True, 'This is a new content!', tags=[test_tag])
+        add_post('Nice post', True, 'This is a new content!', tags=[test_tag])
+        add_post('Bad post', False, 'This is a new content!', tags=[test_tag])
+        add_post('Awesome post', True, 'This is a new content!', tags=[test_tag])
+
+        response = self.client.get(reverse('tag', args=[test_tag.slug]))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "blog/tag.html")
+        self.assertQuerysetEqual(
+            response.context['posts'],
+            ['<Post: Awesome post>', '<Post: Bad post>', '<Post: Nice post>',
+             '<Post: Good post>'])
+
+
 class RSSTests(TestCase):
     def test_no_private_posts(self):
         """Unpublished posts should not be present in XML."""
@@ -227,17 +277,21 @@ class MarkdownEditorTests(TestCase):
     def test_custom_markdown_tags(self):
         test_string = ("This !-- is endash\n"
                        "![This is image](http://via.placeholder.com/350x150)\n"
-                       "![This is a figure][This is a figure alt](http://via.placeholder.com/450x300)\n"
-                       "!F[This is woo][done][FF0000][](https://docs.djangoproject.com/en/1.11/topics/testing/tools/)")
+                       "![This is a figure][This is a figure alt]("
+                       "http://via.placeholder.com/450x300)\n"
+                       "!F[This is woo][done][FF0000][]("
+                       "https://docs.djangoproject.com/en/1.11/topics/testing/tools/)")
         output = self.markdown.render(test_string)
 
         correct_output = ("<p>This — is endash\n"
                           "<img src=\"http://via.placeholder.com/350x150\" alt=\"This is image\">\n"
-                          "<figure><img src=\"http://via.placeholder.com/450x300\" alt=\"This is a figure alt\" /><div>This is a figure</div></figure>\n"
+                          "<figure><img src=\"http://via.placeholder.com/450x300\" alt=\"This is "
+                          "a figure alt\" /><div>This is a figure</div></figure>\n"
                           "\n"
                           "<div class=\"woo\">\n"
                           "  <div class=\"woo-fake\" style=\"background: #FF0000;\"></div>\n"
-                          "  <a href=\"https://docs.djangoproject.com/en/1.11/topics/testing/tools/\"><div class=\"woo-content-wrapper\">\n"
+                          "  <a href=\"https://docs.djangoproject.com/en/1.11/topics/testing"
+                          "/tools/\"><div class=\"woo-content-wrapper\">\n"
                           "    <div class=\"woo-content \">\n"
                           "      <i class=\"material-icons\">done</i>\n"
                           "      <div>This is woo</div>\n"
