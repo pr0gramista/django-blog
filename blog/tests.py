@@ -9,7 +9,7 @@ from mistune import Markdown
 from taggit.models import Tag
 
 from .markdown import PostRenderer, PostInlineLexer
-from .models import Post, HeaderImage
+from .models import Post, HeaderImage, Page
 
 example_image = SimpleUploadedFile(name='test.png', content=open(
     'test.png', 'rb').read(), content_type='image/jpeg')
@@ -145,6 +145,17 @@ class PostViewTests(TestCase):
 
         response = self.client.get(reverse('post', args=post.slug))
         self.assertEqual(response.status_code, 200)
+
+
+class PageTests(TestCase):
+    def test_page_ok(self):
+        """Check if page renders correctly"""
+        page = Page.objects.create(title="Test page", slug="test-page", content="It better works, "
+                                                                                "or I am screwed")
+        response = self.client.get(reverse('page', args=[page.slug]))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'blog/page.html')
+        self.assertEqual(response.context['page'], page)
 
 
 class TagTests(TestCase):
