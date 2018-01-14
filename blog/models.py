@@ -41,6 +41,9 @@ class Page(models.Model):
     content = models.TextField(verbose_name="Zawartość")
     order = models.IntegerField(verbose_name="Kolejność", default=10)
 
+    def __str__(self):
+        return self.title
+
 
 class SocialLink(models.Model):
     slug = models.SlugField(default='')
