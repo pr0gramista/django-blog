@@ -53,6 +53,10 @@ def add_post(title, published, content, fullwidth=True, tags=None):
 
 
 class IndexViewTests(TestCase):
+    def setUp(self):
+        from . import views
+        views.POSTS_PER_PAGE = 5
+
     def test_no_private_posts(self):
         """Unpublished posts should not be displayed in any form."""
         add_post('Good post', True, 'This is a new content!')
@@ -93,6 +97,55 @@ class IndexViewTests(TestCase):
         self.assertQuerysetEqual(
             response.context['posts'],
             ['<Post: Awesome post>', '<Post: Bad post>', '<Post: Nice post>', '<Post: Good post>'])
+
+
+class PaginationSpecificTests(TestCase):
+    def setUp(self):
+        from . import views
+        views.POSTS_PER_PAGE = 2
+
+    def test_pagination_10(self):
+        """Pagination should display only as many posts as defined in views.py POST_PER_PAGE"""
+
+        for n in range(1, 30):
+            add_post('Post ' + str(n), True, 'This is test content!')
+
+        response = self.client.get(reverse('index_pagination', args=[10]))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "blog/index.html")
+        self.assertQuerysetEqual(
+            response.context['posts'],
+            ['<Post: Post 11>', '<Post: Post 10>', ]
+        )
+
+    def test_limit_pagination(self):
+        """Pagination should display only as many posts as defined in views.py POST_PER_PAGE"""
+
+        for n in range(1, 7):  # 6 posts
+            add_post('Post ' + str(n), True, 'This is test content!')
+
+        response = self.client.get(reverse('index_pagination', args=[2]))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "blog/index.html")
+        self.assertQuerysetEqual(
+            response.context['posts'],
+            ['<Post: Post 4>', '<Post: Post 3>', ]
+        )
+
+    def test_limit_tag_pagination(self):
+        """Pagination should display only as many posts as defined in views.py POST_PER_PAGE"""
+        test_tag = Tag.objects.create(name="Test", slug="test")
+
+        for n in range(1, 6):  # 5 posts
+            add_post('Post ' + str(n), True, 'This is test content!', tags=[test_tag])
+
+        response = self.client.get(reverse('tag_pagination', args=[test_tag.slug, 2]))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "blog/tag.html")
+        self.assertQuerysetEqual(
+            response.context['posts'],
+            ['<Post: Post 3>', '<Post: Post 2>', ]
+        )
 
 
 class PostViewTests(TestCase):
@@ -159,6 +212,10 @@ class PageTests(TestCase):
 
 
 class TagTests(TestCase):
+    def setUp(self):
+        from . import views
+        views.POSTS_PER_PAGE = 5
+
     def test_no_private_posts(self):
         """Unpublished posts should not be displayed in any form."""
         test_tag = Tag.objects.create(name="Test", slug="test")
