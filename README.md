@@ -1,4 +1,4 @@
-# Blog engine for [pr0gramista.pl](https://pr0gramista.pl) ![Travis CI status](https://travis-ci.org/pr0gramista/pr0gramista.svg?branch=master) [![codecov](https://codecov.io/gh/pr0gramista/pr0gramista/branch/master/graph/badge.svg)](https://codecov.io/gh/pr0gramista/pr0gramista)
+# Blog engine for [pr0gramista.pl](https://pr0gramista.pl) [![Build Status](https://travis-ci.org/pr0gramista/pr0gramista.svg?branch=master)](https://travis-ci.org/pr0gramista/pr0gramista) [![codecov](https://codecov.io/gh/pr0gramista/pr0gramista/branch/master/graph/badge.svg)](https://codecov.io/gh/pr0gramista/pr0gramista)
 Written in Python, powered by django.
 
 ### Easy config
