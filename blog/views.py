@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from taggit.models import Tag
 
@@ -80,3 +80,7 @@ def page(request, page_slug):
     page = Page.objects.get(slug=page_slug)
     context = {'page': page}
     return render(request, 'blog/page.html', context)
+
+
+def youtube(request):
+    return redirect('https://www.youtube.com/channel/UCHPUGfK2zW0VUNN2SgCHsXg')

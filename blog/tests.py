@@ -211,6 +211,12 @@ class PageTests(TestCase):
         self.assertEqual(response.context['page'], page)
 
 
+class UtilityTests(TestCase):
+    def test_youtube_redirection_ok(self):
+        response = self.client.get('/youtube')
+        self.assertRedirects(response, 'https://www.youtube.com/channel/UCHPUGfK2zW0VUNN2SgCHsXg', fetch_redirect_response=False)
+
+
 class TagTests(TestCase):
     def setUp(self):
         from . import views

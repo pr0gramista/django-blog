@@ -14,4 +14,5 @@ urlpatterns = [
     url(r'^tag/(?P<tag_slug>[aA-zZ0-9-]+)/$', views.tag, name='tag'),
     url(r'^rss/$', feeds.LatestPostsFeed(), name='rss_index'),
     url(r'^tag/(?P<tag_slug>[aA-zZ0-9-]+)/rss/$', feeds.TagPostsFeed(), name='rss_tag'),
+    url(r'^youtube$', views.youtube, name='youtube')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
