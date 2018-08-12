@@ -15,134 +15,38 @@
   <link rel="mask-icon" href="{% static "/safari-pinned-tab.svg" %}" color="#1f262c">
   <meta name="theme-color" content="#282c34">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono" rel="stylesheet">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="//cdn.materialdesignicons.com/1.9.32/css/materialdesignicons.min.css">
-  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-  <link rel="stylesheet" href="{% static "/css/style.css" %}" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/atom-one-dark.min.css">
   <link rel="alternate" type="application/rss+xml" title="RSS blog pr0gramista" href="/rss" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link href="https://fonts.googleapis.com/css?family=Inconsolata|Lora" rel="stylesheet">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/atom-one-dark.min.css">
+  <link href="{% static '/css/styles.css' %}" rel="stylesheet">
   <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
-  <div class="mdl-layout mdl-js-layout mdl-layout--no-desktop-drawer-button mdl-layout--fixed-header">
-    <header class="mdl-layout__header">
-      <div class="mdl-layout__header-row container">
-        <!-- Title -->
-
-        <span class="mdl-layout-title title"><a href="/" class="nolink">>PR0GRAMISTA_</a></span>
-        <!-- Add spacer, to align navigation to the right -->
-        <div class="mdl-layout-spacer"></div>
-        <!-- Navigation. We hide it in small screens. -->
-        <nav class="mdl-navigation mdl-layout--large-screen-only">
-          {% for page in pages %}
-          <a class="mdl-navigation__link" href="{% url 'page' page.slug %}">{{ page.title }}</a>
-          {% endfor %}
-        </nav>
-      </div>
-    </header>
-    <div class="mdl-layout__drawer">
-      <span class="mdl-layout-title">PR0GRAMISTA</span>
-      <nav class="mdl-navigation">
+    <header id="top">
+      <nav>
+        <a href="/" class="logo">>PR0GRAMISTA_</a>
+        <a href="/" class="logo__small">>_</a>
+        <span class="spacer"></span>
         {% for page in pages %}
-        <a class="mdl-navigation__link" href="{% url 'page' page.slug %}">{{ page.title }}</a>
+        <a href="{% url 'page' page.slug %}">[{{ page.title }}]</a>
         {% endfor %}
       </nav>
-    </div>
-    <main class="mdl-layout__content">
-      <div class="page-content">
-        <div class="container">
-          <div class="mdl-grid">
-            <div class="mdl-cell mdl-cell--8-col">
-              {% block content %}{% endblock %}
-            </div>
-            <div class="sidebar mdl-cell mdl-cell--4-col">
-              <div class="sidebar-twitter mdl-shadow--3dp">
-                <i class="mdi mdi-twitter"></i>
-                <div id="twitter-timeline"></div>
-              </div>
-              <div class="sidebar-mail mdl-shadow--3dp">
-                <i class="material-icons big">email</i>
-                <div class="title">Napisz do mnie!</div>
-                <div class="email"><a href="mailto:kontakt@pr0gramista.pl">kontakt@pr0gramista.pl</a></div>
-              </div>
-              <div class="sidebar-tags mdl-shadow--3dp">
-                <div class="title">Najpopularniejsze tagi</div>
-                {% for tag in tags %}
-                <a href="{% url 'tag' tag.slug %}">
-                  <span class="mdl-chip">
-                    <span class="mdl-chip__text">{{ tag.name }}</span>
-                  </span>
-                </a>
-                {% endfor %}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <footer>
-        <div class="container">
-          <div class="mdl-mini-footer">
-            <div class="mdl-mini-footer__left-section">
-              <div class="mdl-logo">
-                PR0GRAMISTA
-              </div>
-              <ul class="mdl-mini-footer__link-list">
-                {% for page in pages %}
-                <li><a href="{% url 'page' page.slug %}">{{ page.title }}</a></li>
-                {% endfor %}
-              </ul>
-            </div>
-            <div class="mdl-mini-footer__right-section">
-              {% for link in social_links %}
-              <a href="{{ link.url }}" class="nolink icon-button" id="{{ link.slug }}">
-                <img src="{{ link.image.url }}" alt="{{ link.slug }}" />
-              </a>
-              <div class="mdl-tooltip" data-mdl-for="{{ link.slug }}">
-                {{ link.tooltip }}
-              </div>
-              {% endfor %}
-            </div>
-          </div>
-        </div>
-      </footer>
+    </header>
+    <main>
+      {% block content %}{% endblock %}
     </main>
+    <footer>
+      <nav>
+        <span class="logo">>_</span>
+        <span class="spacer"></span>
+        <a href="#top">Idź do góry<i class="material-icons">arrow_upward</i></a>
+        <span>Rozwijane z myślą o środowisku.</span>
+      </nav>
+    </footer>
   </div>
-  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-  <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
-  <script>
-      document.body.addEventListener('mdl-componentupgraded', function (event) {
-    if (event.target.className.split(' ').indexOf('mdl-js-layout') < 0) {
-      return;
-    }
-    twttr.widgets.createTimeline(
-      {
-        sourceType: 'profile',
-          screenName: 'pr0gramista'
-      },
-      document.getElementById('twitter-timeline'),
-      {
-        width: '100%',
-        tweetLimit: 3,
-        lang: 'pl'
-      }
-    );
-  })
-  </script>
-  <script>
-      document.querySelector(".gallery-more > button").addEventListener('click', function (event) {
-          document.querySelector(".gallery").classList.remove("less");
-          document.querySelector(".gallery").classList.add("more");
-      });
-
-      document.querySelector(".gallery-less > button").addEventListener('click', function (event) {
-          document.querySelector(".gallery").classList.remove("more");
-          document.querySelector(".gallery").classList.add("less");
-      });
-  </script>
   {% include "blog/analytics.html" %}
 </body>
 </html>

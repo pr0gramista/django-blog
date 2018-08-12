@@ -1,0 +1,30 @@
+footer {
+  padding: 10px 30px 10px 20px;
+  background: #EEE;
+  font-family: 'Inconsolata', monospace;
+  color: #333;
+  nav {
+    margin: auto;
+    max-width: $container-nav-width;
+    display: flex;
+    align-items: center;
+
+    .logo {
+      font-weight: 500;
+      letter-spacing: 0.8px;
+      font-size: 2.5rem;
+    }
+    .spacer {
+      flex: 2;
+    }
+    a {
+      color: inherit;
+      text-decoration: none;
+      margin-right: 10px;
+    }
+    i {
+      vertical-align: middle;
+      font-size: 1rem;
+    }
+  }
+}

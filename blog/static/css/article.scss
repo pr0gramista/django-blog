@@ -1,0 +1,83 @@
+$break-small: 600px;
+$break: 1000px;
+$container-nav-width: 1200px;
+$padding-content: 20px;
+
+article {
+  .content {
+    padding: 0 $padding-content;
+
+    img {
+      width: 100%;
+      margin-top: 1em;
+      margin-bottom: 1em;
+    }
+  }
+
+  .meta {
+    padding: 0 $padding-content;
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    .tech-logo {
+      width: 40px;
+      height: 40px;
+      margin: 0 10px 0 0;
+    }
+    .meta-text {
+      color: #666;
+      line-height: 1.4;
+      margin-left: 10px;
+      display: flex;
+      flex-direction: column;
+    }
+    .read-time {
+      font-style: italic;
+    }
+  }
+
+  @media screen and (max-width: $break) {
+    .meta {
+      font-size: 0.8rem;
+      .tech-logo {
+        width: 30px;
+        height: 30px;
+      }
+    }
+  }
+}
+
+article.preview {
+  margin-bottom: 20px;
+  padding: 0 $padding-content;
+  position: relative;
+  display: flex;
+
+  .preview-text {
+    display: flex;
+    align-self: center;
+    flex-direction: column;
+  }
+  .meta {
+    padding: 0;
+  }
+  h3, p {
+    margin: 0;
+  }
+  img {
+    max-width: 250px;
+    width: auto;
+    height: auto;
+    margin-right: 25px;
+  }
+  a {
+    text-decoration: none;
+    color: inherit
+  }
+  @media screen and (max-width: $break) {
+    img {
+      max-width: 150px;
+    }
+  }
+}
+
