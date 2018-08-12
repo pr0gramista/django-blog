@@ -158,28 +158,6 @@ class PostViewTests(TestCase):
         self.assertTemplateUsed(response, "blog/post.html")
         self.assertEqual(response.context['post'].title, 'good post')
 
-    def test_fullwidth_post(self):
-        post = add_post('good post', True, 'This is public post', fullwidth=True)
-        response = self.client.get(reverse('post', args=post.slug))
-
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(
-            any(x for x in response.templates if '/base-fullwidth.html' in x.name),
-            True)
-        self.assertTemplateUsed(response, "blog/post.html")
-        self.assertEqual(response.context['post'].title, 'good post')
-
-    def test_no_fullwidth_post(self):
-        post = add_post('bad post', True, 'This is public post', fullwidth=False)
-        response = self.client.get(reverse('post', args=post.slug))
-
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(
-            any(x for x in response.templates if '/base-fullwidth.html' in x.name),
-            False)
-        self.assertTemplateUsed(response, "blog/post.html")
-        self.assertEqual(response.context['post'].title, 'bad post')
-
     def test_no_private_post(self):
         """
         Unpublished post should not be displayed in any form for unauthorized users
