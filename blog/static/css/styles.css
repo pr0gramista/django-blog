@@ -74,6 +74,20 @@ article .content {
     width: 100%;
     margin-top: 1em;
     margin-bottom: 1em; }
+  article .content figure {
+    margin: 1rem 0 1rem 0; }
+    article .content figure img {
+      margin-bottom: 0.4em; }
+  article .content .woo {
+    font-family: 'Inconsolata', monospace;
+    padding: 15px;
+    border: 1px #333 dashed;
+    text-align: center; }
+    article .content .woo .material-icons {
+      font-size: 3rem; }
+    article .content .woo a {
+      text-decoration: none;
+      color: inherit; }
 article .meta {
   padding: 0 20px;
   display: flex;
@@ -137,6 +151,9 @@ body {
   font-size: 18px;
   line-height: 1.6;
   text-rendering: optimizeLegibility; }
+
+a {
+  color: #ff4081; }
 
 main {
   padding-bottom: 30px; }
