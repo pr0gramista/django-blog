@@ -29,7 +29,7 @@
         <a href="/" class="logo__small">>_</a>
         <span class="spacer"></span>
         {% for page in pages %}
-        <a href="{% url 'page' page.slug %}">[{{ page.title }}]</a>
+        <a href="{% url 'page' page.slug %}">[ {{ page.title }} ]</a>
         {% endfor %}
       </nav>
     </header>
