@@ -2,7 +2,7 @@ from django.contrib import admin
 from mistune import Markdown
 
 from .markdown import PostRenderer, PostInlineLexer
-from .models import Post, Page, SocialLink, HeaderImage
+from .models import Post, Page, SocialLink, HeaderImage, Category
 
 # Add custom markdown renderer
 renderer = PostRenderer()
@@ -44,3 +44,4 @@ admin.site.register(Post, PostAdmin)
 admin.site.register(Page)
 admin.site.register(SocialLink)
 admin.site.register(HeaderImage)
+admin.site.register(Category)

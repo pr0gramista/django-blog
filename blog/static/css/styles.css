@@ -82,11 +82,11 @@ article .meta {
   article .meta .tech-logo {
     width: 40px;
     height: 40px;
-    margin: 0 10px 0 0; }
+    margin: 0 10px 0 0;
+    margin-right: 10px; }
   article .meta .meta-text {
     color: #666;
     line-height: 1.4;
-    margin-left: 10px;
     display: flex;
     flex-direction: column; }
   article .meta .read-time {

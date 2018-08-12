@@ -1,5 +1,6 @@
 {
-    "name": "Pr0gramista",
+    "name": "pr0gramista",
+    "short_name": "pr0gramista",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",

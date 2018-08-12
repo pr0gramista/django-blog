@@ -11,6 +11,17 @@ Markdown editor with some special tags:</br>
 !F[text][icon name][color without #][class (can be empty)](link)</br>
 """
 
+class Category(models.Model):
+    name = models.CharField(max_length=200, verbose_name="Nazwa")
+    image = ProcessedImageField(
+        upload_to='images/categories',
+        verbose_name="Ikonka",
+        processors=[ResizeToFill(128, 128, upscale=False)],
+        format='JPEG',
+        options={'quality': 80})
+    def __str__(self):
+        return self.name
+
 
 class Post(models.Model):
     title = models.CharField(max_length=200, verbose_name="Tytuł")
@@ -25,6 +36,13 @@ class Post(models.Model):
         'HeaderImage',
         on_delete=models.DO_NOTHING,
         verbose_name="Główny obrazek")
+    category = models.ForeignKey(
+        'Category',
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+        verbose_name="Kategoria")
+    read_time = models.TextField(verbose_name="Czas czytania", default='5 minut', blank=True)
     pub_date = models.DateTimeField(verbose_name="Data publikacji")
     raw_content = models.TextField(verbose_name="Zawartość surowa", help_text=post_help_text)
     content = models.TextField(verbose_name="Zawartość", default='', blank=True)
