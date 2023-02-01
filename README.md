@@ -1,3 +1,9 @@
+> **Warning**
+>
+> For the last few years my blog was powered by static website (Jamstack style). Django has probably evolved and this code is now deprecated.
+> Thank you!
+
+
 # Blog engine for [pr0gramista.pl](https://pr0gramista.pl) [![Build Status](https://travis-ci.org/pr0gramista/pr0gramista.svg?branch=master)](https://travis-ci.org/pr0gramista/pr0gramista) [![codecov](https://codecov.io/gh/pr0gramista/pr0gramista/branch/master/graph/badge.svg)](https://codecov.io/gh/pr0gramista/pr0gramista)
 
 Written in Python, powered by django.
